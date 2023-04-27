@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="mainpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0" prefWidth="661.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fis.HelloController">
+   <children>
+      <AnchorPane fx:id="paneright" layoutX="262.0" layoutY="32.0" prefHeight="386.0" prefWidth="398.0" style="-fx-background-color: linear-gradient(to right, black, orange); -fx-background-radius: 18 18 18 18;">
+         <children>
+            <TextField layoutX="107.0" layoutY="118.0" opacity="0.19" prefHeight="26.0" prefWidth="193.0" promptText="Enter username" style="-fx-background-color: black;">
+               <effect>
+                  <Blend opacity="0.85" />
+               </effect>
+            </TextField>
+            <TextField layoutX="106.0" layoutY="166.0" opacity="0.19" prefHeight="26.0" prefWidth="194.0" promptText="Enter password" style="-fx-background-color: black;" />
+            <ImageView fitHeight="37.0" fitWidth="42.0" layoutX="178.0" layoutY="30.0">
+               <image>
+                  <Image url="@/clipart2308682.png" />
+               </image>
+            </ImageView>
+            <JFXButton buttonType="RAISED" layoutX="133.0" layoutY="238.0" prefHeight="26.0" prefWidth="137.0" style="-fx-background-color: black;" text="Login" textFill="#ffae00" />
+            <Text layoutX="119.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" wrappingWidth="130.93670654296875" />
+            <JFXButton layoutX="237.0" layoutY="288.0" text="Signup" textFill="#ffae00" />
+         </children></AnchorPane>
+      <AnchorPane fx:id="paneleft" layoutY="2.0" prefHeight="451.0" prefWidth="279.0" style="-fx-background-color: black; -fx-background-radius: 18 18 18 18; -fx-border-radius: 18 18 18 18;">
+         <children>
+            <JFXButton fx:id="exitButton" buttonType="RAISED" layoutX="6.0" layoutY="3.0" onMouseClicked="#closeWindow" prefHeight="34.0" prefWidth="23.0" ripplerFill="WHITE" text="X" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </JFXButton>
+            <ImageView fitHeight="143.0" fitWidth="151.0" layoutX="48.0" layoutY="40.0">
+               <image>
+                  <Image url="@/cinemacity.jpg" />
+               </image>
+            </ImageView>
+            <JFXButton buttonType="RAISED" layoutX="85.0" layoutY="248.0" opacity="0.83" prefHeight="37.0" prefWidth="100.0" ripplerFill="#ffa300" style="-fx-background-color: #ffa300;" text="Admin">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
