@@ -13,20 +13,21 @@
    <children>
       <AnchorPane fx:id="paneright" layoutX="262.0" layoutY="32.0" prefHeight="386.0" prefWidth="398.0" style="-fx-background-color: linear-gradient(to right, black, orange); -fx-background-radius: 18 18 18 18;">
          <children>
-            <TextField layoutX="107.0" layoutY="118.0" opacity="0.19" prefHeight="26.0" prefWidth="193.0" promptText="Enter username" style="-fx-background-color: black;">
+            <TextField fx:id="username" layoutX="107.0" layoutY="118.0" opacity="0.19" prefHeight="26.0" prefWidth="193.0" promptText="Enter username" style="-fx-background-color: black;">
                <effect>
                   <Blend opacity="0.85" />
                </effect>
             </TextField>
-            <TextField layoutX="106.0" layoutY="166.0" opacity="0.19" prefHeight="26.0" prefWidth="194.0" promptText="Enter password" style="-fx-background-color: black;" />
+            <TextField fx:id="password" layoutX="106.0" layoutY="166.0" opacity="0.19" prefHeight="26.0" prefWidth="194.0" promptText="Enter password" style="-fx-background-color: black;" />
             <ImageView fitHeight="37.0" fitWidth="42.0" layoutX="178.0" layoutY="30.0">
                <image>
                   <Image url="@/clipart2308682.png" />
                </image>
             </ImageView>
-            <JFXButton buttonType="RAISED" layoutX="133.0" layoutY="238.0" prefHeight="26.0" prefWidth="137.0" style="-fx-background-color: black;" text="Login" textFill="#ffae00" />
+            <JFXButton buttonType="RAISED" layoutX="133.0" layoutY="238.0" onAction="#checkEmpty" prefHeight="26.0" prefWidth="137.0" style="-fx-background-color: black;" text="Login" textFill="#ffae00" />
             <Text layoutX="119.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" wrappingWidth="130.93670654296875" />
             <JFXButton layoutX="237.0" layoutY="288.0" text="Signup" textFill="#ffae00" />
+            <Text fx:id="invalidLoginText" layoutX="151.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect. Try again" visible="false" />
          </children></AnchorPane>
       <AnchorPane fx:id="paneleft" layoutY="2.0" prefHeight="451.0" prefWidth="279.0" style="-fx-background-color: black; -fx-background-radius: 18 18 18 18; -fx-border-radius: 18 18 18 18;">
          <children>
