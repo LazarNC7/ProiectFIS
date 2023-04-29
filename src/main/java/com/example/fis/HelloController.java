@@ -3,6 +3,7 @@ package com.example.fis;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
@@ -12,6 +13,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -88,6 +90,7 @@ public class HelloController implements Initializable {
             while (resultSet.next()){
                 if(resultSet.getInt(1)==1){
                     invalidLoginText.setVisible(false);
+
                 }else {
                     invalidLoginText.setVisible(true);
                 }
@@ -100,7 +103,26 @@ public class HelloController implements Initializable {
     public void checkEmpty(ActionEvent event){
         if(username.getText().isBlank()==false && password.getText().isBlank()==false){
             validateLogin();
+
         }
     }
+
+    public void signupForm(){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("signup.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stageSign=new Stage();
+            SignupController controller=fxmlLoader.getController();
+            scene.setFill(Color.TRANSPARENT);
+            stageSign.initStyle(StageStyle.TRANSPARENT);
+            stageSign.setScene(scene);
+            controller.setStage(stageSign);
+            stageSign.show();
+            stage.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
 }

@@ -6,10 +6,8 @@ public class DatabaseConnection {
     public Connection dataBaseLink;
 
     public Connection geConnection(){
-        String dbName = "";
-        String dbUser = "";
-        String dbPassword = "";
-        String url="jdbc:sqlite:identifier.sqlite"+dbName;
+
+        String url="jdbc:sqlite:identifier.sqlite";
 
         try{
             dataBaseLink=DriverManager.getConnection(url);

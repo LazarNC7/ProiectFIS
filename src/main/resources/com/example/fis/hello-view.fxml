@@ -26,7 +26,7 @@
             </ImageView>
             <JFXButton buttonType="RAISED" layoutX="133.0" layoutY="238.0" onAction="#checkEmpty" prefHeight="26.0" prefWidth="137.0" style="-fx-background-color: black;" text="Login" textFill="#ffae00" />
             <Text layoutX="119.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" wrappingWidth="130.93670654296875" />
-            <JFXButton layoutX="237.0" layoutY="288.0" text="Signup" textFill="#ffae00" />
+            <JFXButton fx:id="signupbuton" layoutX="237.0" layoutY="288.0" onAction="#signupForm" text="Signup" textFill="#ffae00" />
             <Text fx:id="invalidLoginText" layoutX="151.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect. Try again" visible="false" />
          </children></AnchorPane>
       <AnchorPane fx:id="paneleft" layoutY="2.0" prefHeight="451.0" prefWidth="279.0" style="-fx-background-color: black; -fx-background-radius: 18 18 18 18; -fx-border-radius: 18 18 18 18;">
