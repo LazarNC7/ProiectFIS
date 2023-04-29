@@ -46,6 +46,7 @@ public class HelloController implements Initializable {
     private Text invalidLoginText;
 
 
+
     @FXML
     void closeWindow(MouseEvent event) {
         stage.close();
