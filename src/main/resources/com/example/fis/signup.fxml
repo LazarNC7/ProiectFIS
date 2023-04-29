@@ -14,7 +14,7 @@
          <children>
             <ImageView fitHeight="49.0" fitWidth="46.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="C:\Users\nocti\IdeaProjects\FIS\src\main\java\com\example\fis\resurse\cinemacity.jpg" />
+                  <Image url="@/cinemacity.jpg" />
                </image>
             </ImageView>
             <Text fill="ORANGE" layoutX="173.0" layoutY="57.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Signup">
