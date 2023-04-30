@@ -125,5 +125,21 @@ public class HelloController implements Initializable {
         }
     }
 
+    public void adminLoginMethod(ActionEvent event){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("adminLogin.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stageSign=new Stage();
+            AdminLoginController controller=fxmlLoader.getController();
+            scene.setFill(Color.TRANSPARENT);
+            stageSign.initStyle(StageStyle.TRANSPARENT);
+            stageSign.setScene(scene);
+            controller.setStage(stageSign);
+            stageSign.show();
+            stage.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 }
