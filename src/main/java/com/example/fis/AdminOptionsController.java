@@ -8,4 +8,12 @@ public class AdminOptionsController extends SelectMovieController{
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+
+    public void addMovies(){
+
+    }
+
+    public void closeWindow(){
+
+    }
 }
