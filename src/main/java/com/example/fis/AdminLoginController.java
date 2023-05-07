@@ -3,7 +3,9 @@ package com.example.fis;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -11,7 +13,9 @@ import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -53,12 +57,17 @@ public class AdminLoginController implements Initializable {
     @FXML
     public void checkEmpty(ActionEvent event){
         if(username.getText().isBlank()==false && password.getText().isBlank()==false){
-            validateLogin();
+            try {
+                validateLogin();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
 
         }
     }
 
-    public void validateLogin(){
+    public void validateLogin() throws IOException {
         DatabaseConnection connection=new DatabaseConnection();
         Connection connectiondb=connection.geConnection();
         String verify = "select count(1) from AdminInfo where adminName ='"+username.getText()+"' and password='"+password.getText()+"'";
@@ -78,6 +87,14 @@ public class AdminLoginController implements Initializable {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("adminOptions.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        AdminOptionsController controller=fxmlLoader.getController();
+        scene.setFill(Color.TRANSPARENT);
+        stage.setScene(scene);
+        controller.setStage(stage);
+        stage.show();
     }
 
     @FXML
