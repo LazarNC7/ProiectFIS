@@ -87,9 +87,37 @@ public class AdminOptionsController implements Initializable {
     }
 
     @FXML
-    void deleteMovies(ActionEvent event) {
+        void deleteMovies (ActionEvent event){
+            DataClass selectedFilm = tabel.getSelectionModel().getSelectedItem();
 
-    }
+            if (selectedFilm != null) {
+                try {
+                    // Move the selected film to the DeletedFilms table in the database
+                    Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
+                    String insertQuery = "INSERT INTO DeletedFilms (name,  id_user) VALUES (?, ?)";
+                    PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
+                    String insertQuery2 = "delete from Reservations where Reservations.id_reservation="+selectedFilm.getId_reservation();
+                    PreparedStatement insertStatement2 = connection.prepareStatement(insertQuery2);
+
+                    // Set the values for the insert statement
+                    insertStatement.setString(1, selectedFilm.getTitle());
+                    insertStatement.setInt(2, selectedFilm.getId_user()); // Assuming getUserId() returns the appropriate id_user value
+
+                    // Execute the insert statement
+                    insertStatement.executeUpdate();
+                    insertStatement2.executeUpdate();
+
+                    // Remove the selected film from the TableView
+                    tabel.getItems().remove(selectedFilm);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    // Handle any database errors
+                }
+            }
+        }
+
+
+
 
     @FXML
     void searchMovie(ActionEvent event) {
@@ -250,7 +278,7 @@ public class AdminOptionsController implements Initializable {
 
             // create a new JDBC statement
             Statement statement = connection.createStatement();
-            ResultSet rs=statement.executeQuery("SELECT start,stop,type_room,date,name from Reservations join Film F on F.id_film = Reservations.id_film");
+            ResultSet rs=statement.executeQuery("SELECT start,stop,type_room,date,name,F.image,Reservations.id_user,Reservations.id_reservation from Reservations join Film F on F.id_film = Reservations.id_film");
 
 
         // Loop through the result set and add each row to the observable list
@@ -260,8 +288,10 @@ public class AdminOptionsController implements Initializable {
             int start = rs.getInt("start");
             String type_room = rs.getString("type_room");
             String date=rs.getString("date");
-            data.add(new DataClass(name,start,stop,date,type_room));
-            //System.out.println(data.get(index).getTitle()+data.get(index).getRoomT()+data.get(index).getDateT());
+            int id_user= rs.getInt("id_user");
+            int id_reservation= rs.getInt("id_reservation");
+            data.add(new DataClass(name,start,stop,date,type_room,id_user,id_reservation));
+            //System.out.println(data.get(index).getTitle()+data.get(index).getRoomT()+data.get(index).getDateT()+data.get(index).getId_user());
             index++;
         }
 

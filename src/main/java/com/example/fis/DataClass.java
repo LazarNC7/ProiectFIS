@@ -7,13 +7,19 @@ public class DataClass {
     private String dateT;
     private String roomT;
 
+    private int id_reservation;
 
-    public DataClass(String title, Integer startT, Integer finish, String dateT, String roomT) {
+    private int id_user;
+
+
+    public DataClass(String title, Integer startT, Integer finish, String dateT, String roomT,int id_user, int id_reservation) {
         this.title = title;
         this.startT = startT;
         this.finish = finish;
         this.dateT = dateT;
         this.roomT = roomT;
+        this.id_user=id_user;
+        this.id_reservation=id_reservation;
     }
 
     public String getTitle() {
@@ -34,5 +40,15 @@ public class DataClass {
 
     public String getRoomT() {
         return roomT;
+    }
+
+
+
+    public int getId_user() {
+        return id_user;
+    }
+
+    public int getId_reservation() {
+        return id_reservation;
     }
 }
