@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.ComboBox?>
 <AnchorPane fx:id="pane" prefHeight="659.0" prefWidth="887.0" style="-fx-background-radius: 18 18 18 18;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fis.AdminOptionsController">
    <children>
       <BorderPane layoutX="-15.0" prefHeight="710.0" prefWidth="946.0" style="-fx-background-radius: 18 18 18 18;">
@@ -21,10 +25,10 @@
          <left>
             <AnchorPane prefHeight="652.0" prefWidth="190.0" style="-fx-background-color: linear-gradient(to top, black, orange); -fx-background-radius: 0 0 0 18;" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton fx:id="addButton" buttonType="RAISED" layoutX="36.0" layoutY="214.0" onAction="#addMovies" prefHeight="38.0" prefWidth="139.0" text="Add Movies" textFill="WHITE" />
-                  <JFXButton fx:id="deleteButton" buttonType="RAISED" layoutX="33.0" layoutY="275.0" onAction="#deleteMovies" prefHeight="37.0" prefWidth="140.0" text="Delete Movies" textFill="WHITE" />
-                  <JFXButton fx:id="editButton" buttonType="RAISED" layoutX="40.0" layoutY="336.0" onAction="#EditMovies" prefHeight="40.0" prefWidth="126.0" text="Edit Movies" textFill="WHITE" />
-                  <JFXButton fx:id="customersButton" buttonType="RAISED" layoutX="39.0" layoutY="398.0" onAction="#seeCustomers" prefHeight="42.0" prefWidth="134.0" text="Customers" textFill="WHITE" />
+                  <JFXButton fx:id="addButton" buttonType="RAISED" layoutX="36.0" layoutY="214.0" onAction="#showAdd" prefHeight="38.0" prefWidth="139.0" text="Add Movies" textFill="WHITE" visible="false" />
+                  <JFXButton fx:id="deleteButton" buttonType="RAISED" layoutX="33.0" layoutY="275.0" onAction="#deleteMovies" prefHeight="37.0" prefWidth="140.0" text="Delete Movies" textFill="WHITE" visible="false" />
+                  <JFXButton fx:id="editButton" buttonType="RAISED" layoutX="40.0" layoutY="336.0" onAction="#EditMovies" prefHeight="40.0" prefWidth="126.0" text="Edit Movies" textFill="WHITE" visible="false" />
+                  <JFXButton fx:id="customersButton" buttonType="RAISED" layoutX="39.0" layoutY="398.0" onAction="#seeCustomers" prefHeight="42.0" prefWidth="134.0" text="Customers" textFill="WHITE" visible="false" />
                   <Text fill="WHITE" layoutX="62.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin">
                      <font>
                         <Font name="Verdana Bold" size="23.0" />
@@ -38,7 +42,7 @@
                <children>
                   <AnchorPane layoutX="8.0" layoutY="14.0" prefHeight="619.0" prefWidth="724.0" style="-fx-border-color: black;">
                      <children>
-                        <TableView fx:id="tabel" layoutX="13.0" layoutY="19.0" prefHeight="590.0" prefWidth="698.0">
+                        <TableView fx:id="tabel" layoutX="13.0" layoutY="19.0" prefHeight="590.0" prefWidth="698.0" visible="false">
                           <columns>
                             <TableColumn fx:id="title" prefWidth="300.0" text="Movie Title" />
                             <TableColumn fx:id="dateT" prefWidth="100.0" text="Date" />
@@ -47,6 +51,27 @@
                               <TableColumn fx:id="roomT" prefWidth="100.0" text="Cinema room" />
                           </columns>
                         </TableView>
+                        <AnchorPane fx:id="anchorVisible" layoutX="9.0" layoutY="10.0" prefHeight="599.0" prefWidth="705.0" style="-fx-background-color: black;">
+                           <children>
+                              <Text fill="WHITE" layoutX="242.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADD MOVIE" wrappingWidth="221.58901977539062">
+                                 <font>
+                                    <Font name="Verdana Bold" size="31.0" />
+                                 </font>
+                              </Text>
+                              <TextField fx:id="nameAdd" layoutX="36.0" layoutY="137.0" prefHeight="26.0" prefWidth="246.0" promptText="Name" />
+                              <TextField fx:id="genreAdd" layoutX="36.0" layoutY="217.0" prefHeight="26.0" prefWidth="246.0" promptText="Genre" />
+                              <TextField fx:id="lengthAdd" layoutX="34.0" layoutY="300.0" prefHeight="26.0" prefWidth="249.0" promptText="Length" />
+                              <DatePicker fx:id="dateAdd" layoutX="33.0" layoutY="378.0" prefHeight="26.0" prefWidth="251.0" />
+                              <Text fill="WHITE" layoutX="34.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" />
+                              <Text fill="WHITE" layoutX="414.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start" />
+                              <ComboBox fx:id="roomAdd" layoutX="409.0" layoutY="300.0" onMouseClicked="#roomCollisions" prefHeight="26.0" prefWidth="247.0" />
+                              <Text fill="WHITE" layoutX="414.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stop" />
+                              <ComboBox fx:id="startAdd" layoutX="414.0" layoutY="136.0" onMouseClicked="#startCollisions" prefHeight="26.0" prefWidth="235.0" />
+                              <ComboBox fx:id="stopAdd" layoutX="414.0" layoutY="217.0" onMouseClicked="#stopCollisions" prefHeight="26.0" prefWidth="237.0" />
+                              <Text fill="WHITE" layoutX="410.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room" />
+                              <JFXButton fx:id="applyAdd" buttonType="RAISED" layoutX="313.0" layoutY="493.0" onAction="#addMovies" prefHeight="33.0" prefWidth="78.0" text="Apply" textFill="ORANGE" />
+                           </children>
+                        </AnchorPane>
                      </children>
                   </AnchorPane>
                </children>

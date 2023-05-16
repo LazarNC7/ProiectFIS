@@ -67,6 +67,8 @@ public class ClientOptionsController extends SelectMovieController{
     }
 
 
+
+
     public void setStage(Stage stage) {
         this.stage = stage;
     }
