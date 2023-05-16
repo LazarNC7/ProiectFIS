@@ -7,6 +7,7 @@ public class DataClass {
     private String dateT;
     private String roomT;
 
+
     public DataClass(String title, Integer startT, Integer finish, String dateT, String roomT) {
         this.title = title;
         this.startT = startT;

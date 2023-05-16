@@ -5,7 +5,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -14,7 +16,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
@@ -63,8 +67,13 @@ public class AdminOptionsController implements Initializable {
     TableColumn<DataClass, String> title;
 
     @FXML
-    void EditMovies(ActionEvent event) {
-
+    void EditMovies(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("operationsOnMovie"));
+        Scene scene = new Scene(fxmlLoader.load());
+        HelloController controller=fxmlLoader.getController();
+        stage.setScene(scene);
+        controller.setStage(stage);
+        stage.show();
     }
 
     @FXML
@@ -96,7 +105,6 @@ public class AdminOptionsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            tabel.setVisible(true);
             showMovies();
         } catch (SQLException e) {
             throw new RuntimeException(e);

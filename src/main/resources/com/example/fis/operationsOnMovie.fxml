@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="675.0" prefWidth="649.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fis.OperationsOnMovie">
+   <children>
+      <AnchorPane prefHeight="675.0" prefWidth="153.0" style="-fx-background-color: orange; -fx-background-radius: 18 50 50 18;" />
+      <AnchorPane layoutX="138.0" layoutY="16.0" prefHeight="643.0" prefWidth="510.0" style="-fx-background-color: black; -fx-background-radius: 0 18 18 0;">
+         <children>
+            <ImageView fitHeight="187.0" fitWidth="169.0" layoutX="156.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true" />
+            <ChoiceBox layoutX="166.0" layoutY="343.0" prefWidth="150.0" />
+            <JFXButton layoutX="216.0" layoutY="488.0" text="Delete" textFill="ORANGE" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
