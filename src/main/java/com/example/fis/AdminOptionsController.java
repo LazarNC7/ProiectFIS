@@ -277,6 +277,8 @@ public class AdminOptionsController implements Initializable {
                     } else {
                         // Clear the image if no result is found
                         imageDelete.setImage(null);
+
+
                     }
                     statement.close();
                     connection.close();
