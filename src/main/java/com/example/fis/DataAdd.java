@@ -7,12 +7,20 @@ public class DataAdd {
     private String type_room;
     private String date;
 
-    public DataAdd(int id_film, int start, int stop, String type_room, String date) {
+    private String name;
+
+    private String genre;
+    private String length;
+
+    public DataAdd(int id_film, int start, int stop, String type_room, String date,String name,String genre, String length) {
         this.id_film = id_film;
         this.start = start;
         this.stop = stop;
         this.type_room = type_room;
         this.date = date;
+        this.genre=genre;
+        this.name=name;
+        this.length=length;
     }
 
     public int getId_film() {
@@ -33,5 +41,17 @@ public class DataAdd {
 
     public String getDate() {
         return date;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public String getLength() {
+        return length;
     }
 }
