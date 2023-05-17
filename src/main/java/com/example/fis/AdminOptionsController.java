@@ -10,18 +10,24 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -64,11 +70,7 @@ public class AdminOptionsController implements Initializable {
     private ComboBox<Integer> stopAdd;
 
 
-    @FXML
-    void showAdd(ActionEvent event) {
-        tabel.setVisible(false);
-        anchorVisible.setVisible(true);
-    }
+
 
     @FXML
     private Text fillFields;
@@ -76,6 +78,8 @@ public class AdminOptionsController implements Initializable {
     @FXML
     private JFXButton addButton;
 
+    @FXML
+    private AnchorPane anchorVisible1;
 
 
     @FXML
@@ -108,23 +112,7 @@ public class AdminOptionsController implements Initializable {
 
 
 
-    @FXML
-    void addMovies(ActionEvent event) {
-       try{
-           if(nameAdd.getText()!="" && genreAdd.getText()!=""&&lengthAdd.getText()!=""&&
-           dateAdd.getValue()!=null&& startAdd.getValue()!=null&&stopAdd.getValue()!=null&&
-           roomAdd.getValue()!=null){
-               Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
-               String insertQuery = "INSERT INTO DeletedFilms (name,  id_user) VALUES (?, ?)";
-              //nu stiu cum sa fac. daca sa adaug numai filmu sau si rezervari
-               PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
-           }else{
-               fillFields.setVisible(true);
-           }
-       }catch (Exception e){
-           e.printStackTrace();
-       }
-    }
+
 
     @FXML
     void closeWindow(ActionEvent event) {
@@ -133,6 +121,9 @@ public class AdminOptionsController implements Initializable {
 
     @FXML
     void deleteReservation(ActionEvent event) {
+        anchorVisible1.setVisible(false);
+        anchorVisible.setVisible(false);
+        tabel.setVisible(true);
         DataClass selectedFilm = tabel.getSelectionModel().getSelectedItem();
 
         if (selectedFilm != null) {
@@ -214,7 +205,6 @@ public class AdminOptionsController implements Initializable {
 
 
 
-
     int index=0;
     public void showMovies() throws SQLException {
             Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
@@ -259,11 +249,84 @@ public class AdminOptionsController implements Initializable {
 
 
     public void showDelete(ActionEvent event) {
+        anchorVisible1.setVisible(true);
+        anchorVisible.setVisible(false);
+        tabel.setVisible(false);
     }
 
-    public void showEdit(ActionEvent event) {
-    }
+    @FXML
+    TextField nameDelete=new TextField();
 
     public void deleteMovies(ActionEvent event) {
+        try {
+            // Establish the database connection
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
+
+            // Prepare the delete statement
+            String deleteQuery = "DELETE FROM Film WHERE name = ?";
+            PreparedStatement statement = connection.prepareStatement(deleteQuery);
+            statement.setString(1, nameDelete.getText());
+
+
+            // Execute the delete statement
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Film deleted successfully!");
+            } else {
+                System.out.println("No film found with the given information.");
+            }
+
+            // Close the resources
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void showAdd(ActionEvent event) {
+        tabel.setVisible(false);
+        anchorVisible.setVisible(true);
+        anchorVisible1.setVisible(false);
+    }
+
+//    @FXML
+//    void addMovies(ActionEvent event) {
+//        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
+//             PreparedStatement statement = connection.prepareStatement("INSERT INTO Film (name, genre, length) VALUES (?, ?, ?)")) {
+//            statement.setString(1, nameAdd.getText());
+//            statement.setString(2, genreAdd.getText());
+//            statement.setInt(3, Integer.parseInt(lengthAdd.getText()));
+//            statement.executeUpdate();
+//            System.out.println("Film inserted successfully.");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
+    @FXML
+    ImageView imageViewAdd=new ImageView();
+
+    @FXML
+    JFXButton insertButton=new JFXButton();
+
+    public void addMovies(ActionEvent event) {
+        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
+             PreparedStatement statement = connection.prepareStatement("INSERT INTO Film (name, genre, length) VALUES (?, ?, ?)")) {
+            statement.setString(1, nameAdd.getText());
+            statement.setString(2, genreAdd.getText());
+            statement.setInt(3, Integer.parseInt(lengthAdd.getText()));
+            statement.executeUpdate();
+            System.out.println("Film inserted successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public void insertPhoto(ActionEvent event) {
     }
 }

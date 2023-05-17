@@ -10,13 +10,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="pane" prefHeight="659.0" prefWidth="887.0" style="-fx-background-radius: 18 18 18 18;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fis.AdminOptionsController">
+<AnchorPane fx:id="pane" prefHeight="710.0" prefWidth="939.0" style="-fx-background-radius: 18 18 18 18;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fis.AdminOptionsController">
    <children>
-      <BorderPane layoutX="-15.0" prefHeight="710.0" prefWidth="946.0" style="-fx-background-radius: 18 18 18 18;">
+      <BorderPane layoutX="-15.0" prefHeight="710.0" prefWidth="1006.0" style="-fx-background-radius: 18 18 18 18;">
          <top>
-            <AnchorPane prefHeight="58.0" prefWidth="966.0" style="-fx-background-color: orange; -fx-background-radius: 18 18 0 18;" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="58.0" prefWidth="954.0" style="-fx-background-color: orange; -fx-background-radius: 18 18 0 18;" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton fx:id="closeButton" layoutX="908.0" layoutY="16.0" onAction="#closeWindow" text="X" textFill="WHITE" />
+                  <JFXButton fx:id="closeButton" layoutX="968.0" layoutY="16.0" onAction="#closeWindow" text="X" textFill="WHITE" />
                </children>
             </AnchorPane>
          </top>
@@ -25,22 +25,21 @@
                <children>
                   <JFXButton fx:id="addButton" buttonType="RAISED" layoutX="36.0" layoutY="240.0" onAction="#showAdd" prefHeight="38.0" prefWidth="139.0" text="Add Movies" textFill="WHITE" />
                   <JFXButton fx:id="deleteReservationButton" buttonType="RAISED" layoutX="36.0" layoutY="307.0" onAction="#deleteReservation" prefHeight="37.0" prefWidth="140.0" text="Delete Reservation" textFill="WHITE" />
-                  <JFXButton fx:id="editScreeningButton" buttonType="RAISED" layoutX="38.0" layoutY="376.0" onAction="#showEdit" prefHeight="42.0" prefWidth="134.0" text="Edit Screening" textFill="WHITE" />
                   <Text fill="WHITE" layoutX="62.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin">
                      <font>
                         <Font name="Verdana Bold" size="23.0" />
                      </font>
                   </Text>
-                  <JFXButton fx:id="deleteMovieButton" layoutX="62.0" layoutY="450.0" onAction="#showDelete" text="Delete Movie" textFill="WHITE" />
+                  <JFXButton fx:id="deleteMovieButton" layoutX="60.0" layoutY="391.0" onAction="#showDelete" text="Delete Movie" textFill="WHITE" />
                </children>
             </AnchorPane>
          </left>
          <center>
-            <AnchorPane prefHeight="649.0" prefWidth="767.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="652.0" prefWidth="747.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane layoutX="8.0" layoutY="14.0" prefHeight="619.0" prefWidth="724.0" style="-fx-border-color: black;">
+                  <AnchorPane layoutX="32.0" layoutY="14.0" prefHeight="633.0" prefWidth="735.0" style="-fx-border-color: black;">
                      <children>
-                        <TableView fx:id="tabel" layoutX="13.0" layoutY="19.0" prefHeight="590.0" prefWidth="698.0" visible="false">
+                        <TableView fx:id="tabel" layoutX="21.0" layoutY="20.0" prefHeight="611.0" prefWidth="702.0">
                           <columns>
                             <TableColumn fx:id="title" prefWidth="300.0" text="Movie Title" />
                             <TableColumn fx:id="dateT" prefWidth="100.0" text="Date" />
@@ -49,40 +48,41 @@
                               <TableColumn fx:id="roomT" prefWidth="100.0" text="Cinema room" />
                           </columns>
                         </TableView>
-                        <AnchorPane fx:id="anchorVisible" layoutX="9.0" layoutY="10.0" prefHeight="599.0" prefWidth="705.0" style="-fx-background-color: black;" visible="false">
+                        <AnchorPane fx:id="anchorVisible1" prefHeight="643.0" prefWidth="751.0" style="-fx-background-color: black;" visible="false">
+                           <children>
+                              <AnchorPane layoutX="262.0" layoutY="127.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to bottom right, orange, black); -fx-background-radius: 10 10 10 10;">
+                                 <children>
+                                    <ImageView fx:id="imageDelete" fitHeight="185.0" fitWidth="183.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </AnchorPane>
+                              <Text fill="WHITE" layoutX="229.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DELETE MOVIE" wrappingWidth="271.9889831542969">
+                                 <font>
+                                    <Font name="Verdana Bold" size="31.0" />
+                                 </font>
+                              </Text>
+                              <TextField fx:id="nameDelete" layoutX="243.0" layoutY="391.0" prefHeight="26.0" prefWidth="246.0" promptText="Name" />
+                              <JFXButton fx:id="applyDelete" buttonType="RAISED" layoutX="325.0" layoutY="492.0" onAction="#deleteMovies" prefHeight="33.0" prefWidth="78.0" text="Apply" textFill="ORANGE" />
+                              <Text fx:id="fillFields1" fill="RED" layoutX="313.0" layoutY="489.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fill all the fields" visible="false" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="anchorVisible" layoutX="-1.0" prefHeight="640.0" prefWidth="750.0" style="-fx-background-color: black;" visible="false">
                            <children>
                               <Text fill="WHITE" layoutX="252.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADD MOVIE" wrappingWidth="221.58901977539062">
                                  <font>
                                     <Font name="Verdana Bold" size="31.0" />
                                  </font>
                               </Text>
-                              <TextField fx:id="nameAdd" layoutX="229.0" layoutY="317.0" prefHeight="26.0" prefWidth="246.0" promptText="Name" />
-                              <TextField fx:id="genreAdd" layoutX="229.0" layoutY="366.0" prefHeight="26.0" prefWidth="246.0" promptText="Genre" />
-                              <TextField fx:id="lengthAdd" layoutX="227.0" layoutY="411.0" prefHeight="26.0" prefWidth="249.0" promptText="Length" />
-                              <JFXButton fx:id="applyAdd" buttonType="RAISED" layoutX="313.0" layoutY="493.0" onAction="#addMovies" prefHeight="33.0" prefWidth="78.0" text="Apply" textFill="ORANGE" />
+                              <TextField fx:id="nameAdd" layoutX="228.0" layoutY="331.0" prefHeight="26.0" prefWidth="246.0" promptText="Name" />
+                              <TextField fx:id="genreAdd" layoutX="229.0" layoutY="391.0" prefHeight="26.0" prefWidth="246.0" promptText="Genre" />
+                              <TextField fx:id="lengthAdd" layoutX="227.0" layoutY="449.0" prefHeight="26.0" prefWidth="249.0" promptText="Length" />
+                              <JFXButton fx:id="applyAdd" buttonType="RAISED" layoutX="312.0" layoutY="524.0" onAction="#addMovies" prefHeight="33.0" prefWidth="78.0" text="Apply" textFill="ORANGE" />
                               <Text fx:id="fillFields" fill="RED" layoutX="313.0" layoutY="489.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fill all the fields" visible="false" />
                               <AnchorPane layoutX="252.0" layoutY="87.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to bottom right, orange, black); -fx-background-radius: 10 10 10 10;">
                                  <children>
-                                    <ImageView fitHeight="185.0" fitWidth="183.0" layoutX="9.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="imageViewAdd" fitHeight="220.0" fitWidth="180.0" layoutX="12.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </AnchorPane>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="anchorVisible1" layoutX="19.0" layoutY="20.0" prefHeight="599.0" prefWidth="705.0" style="-fx-background-color: black;">
-                     <children>
-                        <Text fill="WHITE" layoutX="229.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DELETE MOVIE" wrappingWidth="271.9889831542969">
-                           <font>
-                              <Font name="Verdana Bold" size="31.0" />
-                           </font>
-                        </Text>
-                        <TextField fx:id="nameDelete" layoutX="230.0" layoutY="378.0" prefHeight="26.0" prefWidth="246.0" promptText="Name" />
-                        <JFXButton fx:id="applyDelete" buttonType="RAISED" layoutX="313.0" layoutY="493.0" onAction="#deleteMovies" prefHeight="33.0" prefWidth="78.0" text="Apply" textFill="ORANGE" />
-                        <Text fx:id="fillFields1" fill="RED" layoutX="313.0" layoutY="489.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fill all the fields" visible="false" />
-                        <AnchorPane layoutX="252.0" layoutY="118.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to bottom right, orange, black); -fx-background-radius: 10 10 10 10;">
-                           <children>
-                              <ImageView fx:id="imageDelete" fitHeight="185.0" fitWidth="183.0" layoutX="9.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
+                              <JFXButton fx:id="insertButton" layoutX="500.0" layoutY="189.0" text="Insert Photo" textFill="ORANGE" />
                            </children>
                         </AnchorPane>
                      </children>
