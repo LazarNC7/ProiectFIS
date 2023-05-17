@@ -39,7 +39,7 @@
                <children>
                   <AnchorPane layoutX="32.0" layoutY="14.0" prefHeight="633.0" prefWidth="735.0" style="-fx-border-color: black;">
                      <children>
-                        <TableView fx:id="tabel" layoutX="21.0" layoutY="20.0" prefHeight="611.0" prefWidth="702.0">
+                        <TableView fx:id="tabel" layoutX="21.0" layoutY="20.0" prefHeight="611.0" prefWidth="702.0" visible="false">
                           <columns>
                             <TableColumn fx:id="title" prefWidth="300.0" text="Movie Title" />
                             <TableColumn fx:id="dateT" prefWidth="100.0" text="Date" />
@@ -48,11 +48,11 @@
                               <TableColumn fx:id="roomT" prefWidth="100.0" text="Cinema room" />
                           </columns>
                         </TableView>
-                        <AnchorPane fx:id="anchorVisible1" prefHeight="643.0" prefWidth="751.0" style="-fx-background-color: black;" visible="false">
+                        <AnchorPane fx:id="anchorVisible1" prefHeight="643.0" prefWidth="751.0" style="-fx-background-color: black;">
                            <children>
                               <AnchorPane layoutX="262.0" layoutY="127.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to bottom right, orange, black); -fx-background-radius: 10 10 10 10;">
                                  <children>
-                                    <ImageView fx:id="imageDelete" fitHeight="185.0" fitWidth="183.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="imageDelete" fitHeight="179.0" fitWidth="183.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </AnchorPane>
                               <Text fill="WHITE" layoutX="229.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DELETE MOVIE" wrappingWidth="271.9889831542969">
@@ -60,7 +60,7 @@
                                     <Font name="Verdana Bold" size="31.0" />
                                  </font>
                               </Text>
-                              <TextField fx:id="nameDelete" layoutX="243.0" layoutY="391.0" prefHeight="26.0" prefWidth="246.0" promptText="Name" />
+                              <TextField fx:id="nameDelete" layoutX="243.0" layoutY="391.0" onKeyPressed="#showImage" prefHeight="26.0" prefWidth="246.0" promptText="Name" />
                               <JFXButton fx:id="applyDelete" buttonType="RAISED" layoutX="325.0" layoutY="492.0" onAction="#deleteMovies" prefHeight="33.0" prefWidth="78.0" text="Apply" textFill="ORANGE" />
                               <Text fx:id="fillFields1" fill="RED" layoutX="313.0" layoutY="489.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fill all the fields" visible="false" />
                            </children>

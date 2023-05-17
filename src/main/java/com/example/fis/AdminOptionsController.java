@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -249,13 +250,45 @@ public class AdminOptionsController implements Initializable {
 
 
     public void showDelete(ActionEvent event) {
+
         anchorVisible1.setVisible(true);
         anchorVisible.setVisible(false);
         tabel.setVisible(false);
     }
 
     @FXML
-    TextField nameDelete=new TextField();
+    private TextField nameDelete=new TextField();
+
+    @FXML
+    private ImageView imageDelete;
+
+    public void showImage(KeyEvent event){
+        nameDelete.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !newValue.isEmpty()) {
+                try {
+                    Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
+                    PreparedStatement statement = connection.prepareStatement("SELECT image FROM Film WHERE name LIKE ?");
+                    statement.setString(1, newValue + "%");
+                    ResultSet rs = statement.executeQuery();
+                    if (rs.next()) {
+                        System.out.println(rs.getString(1));
+                        Image image = new Image(rs.getString(1), 183, 179, false, true);
+                        imageDelete.setImage(image);
+                    } else {
+                        // Clear the image if no result is found
+                        imageDelete.setImage(null);
+                    }
+                    statement.close();
+                    connection.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                // Clear the image if the text is empty
+                imageViewAdd.setImage(null);
+            }
+        });
+    }
 
     public void deleteMovies(ActionEvent event) {
         try {
@@ -286,6 +319,7 @@ public class AdminOptionsController implements Initializable {
 
     @FXML
     void showAdd(ActionEvent event) {
+
         tabel.setVisible(false);
         anchorVisible.setVisible(true);
         anchorVisible1.setVisible(false);
@@ -313,6 +347,7 @@ public class AdminOptionsController implements Initializable {
     JFXButton insertButton=new JFXButton();
 
     public void addMovies(ActionEvent event) {
+
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
              PreparedStatement statement = connection.prepareStatement("INSERT INTO Film (name, genre, length) VALUES (?, ?, ?)")) {
             statement.setString(1, nameAdd.getText());
