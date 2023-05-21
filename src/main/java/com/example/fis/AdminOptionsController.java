@@ -112,7 +112,44 @@ public class AdminOptionsController implements Initializable {
     @FXML
     TableColumn<DataClass, String> title;
 
+    @FXML
+    DatePicker datePickerAddR;
+    @FXML
+    ChoiceBox<Integer> startAddR;
 
+    @FXML
+    ChoiceBox<Integer> stopAddR;
+
+    @FXML
+    ChoiceBox<String> roomAddR;
+
+    @FXML
+    ChoiceBox<String> nameAddR;
+    @FXML
+    JFXButton applyAddR;
+
+    public void addChanges(ActionEvent event){
+        String queryString = "SELECT id_film FROM Film WHERE name = ?";
+        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
+             PreparedStatement statement = connection.prepareStatement(queryString);
+             PreparedStatement statement1 = connection.prepareStatement("INSERT INTO Reservations (id_film, start, stop, type_room, date) VALUES (?, ?, ?,?,?)")) {
+
+            statement.setString(1, nameAddR.getValue());
+            ResultSet resultSet = statement.executeQuery();
+            statement1.setInt(1, resultSet.getInt(1));
+            statement1.setInt(2, startAddR.getValue());
+            statement1.setInt(3, stopAddR.getValue());
+            statement1.setString(4, roomAddR.getValue());
+            statement1.setString(5, datePickerAddR.getValue().toString());
+            statement1.executeUpdate();
+            System.out.println("Reservation inserted successfully.");
+            statement1.close();
+            statement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
@@ -160,6 +197,8 @@ public class AdminOptionsController implements Initializable {
     private double x = 0, y = 0;
 
     ObservableList<DataAdd> dataAdd = FXCollections.observableArrayList();
+    @FXML
+    JFXButton showReservationsButton;
 
 
 
@@ -188,24 +227,70 @@ public class AdminOptionsController implements Initializable {
         });
 
         insertButton.setOnAction(e -> insertPhoto());
-
-    }
-
-    private DateCell createDateCell(DatePicker picker) {
         LocalDate today = LocalDate.now();
         LocalDate weekLater = today.plusDays(7);
-        dateAdd.setValue(today);
-        return new DateCell() {
+        datePickerAddR.setValue(today);
+        datePickerAddR.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 setDisable(empty || date.isBefore(today) || date.isAfter(weekLater));
-
             }
-        };
+        });
+        try {
+            setNameR();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        roomAddR.getItems().addAll("2D", "3D", "IMAX", "4D");
+
+        for(int i=10;i<20;i++){
+            startAddR.getItems().add(i);
+        }
+
+        for(int i=12;i<=22;i++){
+            stopAddR.getItems().add(i);
+        }
+
+        startAddR.setOnAction(event -> {
+            Integer selectedStart = (Integer) startAddR.getValue();
+            Integer selectedStop = (Integer) stopAddR.getValue();
+
+            if (selectedStart != null && selectedStop != null && selectedStart > selectedStop) {
+                stopAddR.setValue(null);
+            }
+        });
+
+// Add event handler for stopAdd choice box
+        stopAddR.setOnAction(event -> {
+            Integer selectedStart = (Integer) startAddR.getValue();
+            Integer selectedStop = (Integer) stopAddR.getValue();
+
+            if (selectedStart != null && selectedStop != null && selectedStop < selectedStart) {
+                startAddR.setValue(null);
+            }
+        });
+
+
     }
 
 
 
+    private void setNameR() throws SQLException {
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
+
+        // create a new JDBC statement
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("SELECT name FROM Film");
+
+        while (rs.next()) {
+            nameAddR.getItems().add(rs.getString(1)); // Use column index 1 for the name column
+        }
+
+        // Close the ResultSet, Statement, and Connection
+        rs.close();
+        statement.close();
+        connection.close();
+    }
 
     int index=0;
     public void showMovies() throws SQLException {
@@ -213,7 +298,7 @@ public class AdminOptionsController implements Initializable {
 
             // create a new JDBC statement
             Statement statement = connection.createStatement();
-            ResultSet rs=statement.executeQuery("SELECT start,stop,type_room,date,name,F.image,Reservations.id_user,Reservations.id_reservation from Reservations join Film F on F.id_film = Reservations.id_film");
+            ResultSet rs=statement.executeQuery("SELECT start,stop,type_room,date,name,F.image,Reservations.id_reservation,RU.id_user from Reservations join Film F on F.id_film = Reservations.id_film join ReservationsUser RU on Reservations.id_reservation = RU.id_reservation");
 
 
         // Loop through the result set and add each row to the observable list
@@ -255,6 +340,7 @@ public class AdminOptionsController implements Initializable {
         anchorVisible1.setVisible(true);
         anchorVisible.setVisible(false);
         tabel.setVisible(false);
+        anchorVisible2.setVisible(false);
     }
 
     @FXML
@@ -326,6 +412,7 @@ public class AdminOptionsController implements Initializable {
         tabel.setVisible(false);
         anchorVisible.setVisible(true);
         anchorVisible1.setVisible(false);
+        anchorVisible2.setVisible(false);
     }
 
 //    @FXML
@@ -384,5 +471,14 @@ public class AdminOptionsController implements Initializable {
                 e.printStackTrace();
             }
         }
+    }
+
+    @FXML
+    AnchorPane anchorVisible2;
+    public void showReservation(ActionEvent event) {
+        anchorVisible2.setVisible(true);
+        anchorVisible1.setVisible(false);
+        tabel.setVisible(false);
+        anchorVisible.setVisible(false);
     }
 }
