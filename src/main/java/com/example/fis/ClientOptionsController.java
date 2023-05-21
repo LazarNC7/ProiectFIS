@@ -64,6 +64,7 @@ public class ClientOptionsController extends SelectMovieController{
         }
 
         saliChoice.getItems().addAll("2D", "3D", "IMAX", "4D");
+
     }
 
 
