@@ -31,6 +31,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -186,7 +187,7 @@ public class AdminOptionsController implements Initializable {
             stage.setY(mouseEvent.getScreenY() - y);
         });
 
-
+        insertButton.setOnAction(e -> insertPhoto());
 
     }
 
@@ -348,15 +349,19 @@ public class AdminOptionsController implements Initializable {
     @FXML
     JFXButton insertButton=new JFXButton();
 
+    private String imagePath;
     public void addMovies(ActionEvent event) {
 
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
-             PreparedStatement statement = connection.prepareStatement("INSERT INTO Film (name, genre, length) VALUES (?, ?, ?)")) {
+             PreparedStatement statement = connection.prepareStatement("INSERT INTO Film (name, genre, length, image) VALUES (?, ?, ?,?)")) {
             statement.setString(1, nameAdd.getText());
             statement.setString(2, genreAdd.getText());
             statement.setInt(3, Integer.parseInt(lengthAdd.getText()));
+            statement.setString(4,imagePath);
             statement.executeUpdate();
             System.out.println("Film inserted successfully.");
+            statement.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -364,6 +369,20 @@ public class AdminOptionsController implements Initializable {
 
 
 
-    public void insertPhoto(ActionEvent event) {
+    private void insertPhoto() {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.jpeg");
+        fileChooser.getExtensionFilters().add(imageFilter);
+        File selectedFile = fileChooser.showOpenDialog(null);
+
+        if (selectedFile != null) {
+            try {
+                imagePath = selectedFile.getAbsolutePath();
+                Image image = new Image(imagePath, 180, 219, false, true);
+                imageViewAdd.setImage(image);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
