@@ -17,15 +17,15 @@ public class UserData {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getfName() {
+    public String getFName() {
         return fName;
     }
 
-    public void setfName(String fName) {
+    public void setFName(String fName) {
         this.fName = fName;
     }
 
-    public String getlName() {
+    public String getLName() {
         return lName;
     }
 
@@ -53,6 +53,7 @@ public class UserData {
         return cardNumber;
     }
 
+
     public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
     }
@@ -64,4 +65,6 @@ public class UserData {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+
 }

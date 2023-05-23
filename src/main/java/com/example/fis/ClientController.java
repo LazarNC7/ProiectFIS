@@ -1,6 +1,7 @@
 package com.example.fis;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -52,7 +53,7 @@ public class ClientController implements Initializable {
     private TableColumn<UserData, String> lName;
 
     @FXML
-    private TableColumn<DeletedFilmsData, String> name;
+    private TableColumn<FilmsData, String> name;
 
     @FXML
     private AnchorPane pane;
@@ -82,7 +83,7 @@ public class ClientController implements Initializable {
     private TableView<?> tableMovies;
 
     @FXML
-    private TableView<?> tableUserInfo;
+    private TableView<UserData> tableUserInfo;
 
     @FXML
     private TableColumn<DataTableClient, String> title;
@@ -130,6 +131,8 @@ public class ClientController implements Initializable {
             finish.setCellValueFactory(new PropertyValueFactory<>("finish"));
             roomT.setCellValueFactory(new PropertyValueFactory<>("roomT"));
             dateT.setCellValueFactory(new PropertyValueFactory<>("dateT"));
+            statement.close();
+            connection.close();
             tabel.setItems(data);
         }catch (Exception e){
             e.printStackTrace();
@@ -137,10 +140,50 @@ public class ClientController implements Initializable {
 
     }
 
+    ObservableList<UserData> dataProfile = FXCollections.observableArrayList();
+    ObservableList<FilmsData> dataFilmsDeleted = FXCollections.observableArrayList();
     @FXML
     void showProfile(ActionEvent event) {
         tabel.setVisible(false);
         anchorVisible1.setVisible(true);
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
+
+            // create a new JDBC statement
+            Statement statement = connection.createStatement();
+
+            ResultSet rs = statement.executeQuery("SELECT first_name, last_name, e_mail, username, card_number, phone_number FROM UserInfo WHERE username = '" + User.getUsername() + "'");
+
+
+            // Loop through the result set and add each row to the observable list
+            while (rs.next()) {
+                String fName = rs.getString("first_name");
+                String lName = rs.getString("last_name");
+                String email = rs.getString("e_mail");
+                String username = rs.getString("username");
+                String cardNumber= rs.getString("card_number");
+                String phoneNumber= rs.getString("phone_number");
+
+
+                dataProfile.add(new UserData(fName,lName,email,username,cardNumber,phoneNumber));
+
+
+            }
+
+
+            // Define the columns for the TableView
+
+
+            email.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
+            username.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUsername()));
+            cardNumber.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCardNumber()));
+            phoneNumber.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPhoneNumber()));
+            fName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFName()));
+            lName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLName()));
+            tableUserInfo.setItems(dataProfile);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @FXML

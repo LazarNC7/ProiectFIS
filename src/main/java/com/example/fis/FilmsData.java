@@ -1,10 +1,10 @@
 package com.example.fis;
 
-public class DeletedFilmsData {
+public class FilmsData {
 
     private String name;
 
-    public DeletedFilmsData(String name) {
+    public FilmsData(String name) {
         this.name = name;
     }
 

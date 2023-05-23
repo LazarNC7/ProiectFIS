@@ -47,6 +47,7 @@ public class HelloController implements Initializable {
 
 
 
+
     @FXML
     void closeWindow(MouseEvent event) {
         stage.close();
@@ -91,7 +92,10 @@ public class HelloController implements Initializable {
             while (resultSet.next()){
                 if(resultSet.getInt(1)==1){
                     invalidLoginText.setVisible(false);
+
                     try{
+                        User.setPassword(password.getText());
+                        User.setUsername(username.getText());
                         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("client.fxml"));
                         Scene scene = new Scene(fxmlLoader.load());
                         Stage stageSign=new Stage();
