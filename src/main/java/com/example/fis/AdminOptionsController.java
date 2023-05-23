@@ -173,6 +173,8 @@ public class AdminOptionsController implements Initializable {
                 PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
                 String insertQuery2 = "delete from Reservations where Reservations.id_reservation=" + selectedFilm.getId_reservation();
                 PreparedStatement insertStatement2 = connection.prepareStatement(insertQuery2);
+                String insertQuery3 = "delete from ReservationsUser where ReservationsUser.id_reservation=" + selectedFilm.getId_reservation();
+                PreparedStatement insertStatement3 = connection.prepareStatement(insertQuery3);
 
                 // Set the values for the insert statement
                 insertStatement.setString(1, selectedFilm.getTitle());
@@ -181,6 +183,7 @@ public class AdminOptionsController implements Initializable {
                 // Execute the insert statement
                 insertStatement.executeUpdate();
                 insertStatement2.executeUpdate();
+                insertStatement3.executeUpdate();
 
                 // Remove the selected film from the TableView
                 tabel.getItems().remove(selectedFilm);

@@ -28,6 +28,7 @@
                         <Font name="Verdana Bold" size="23.0" />
                      </font>
                   </Text>
+                  <JFXButton fx:id="showMovies" layoutX="56.0" layoutY="429.0" onAction="#showMovies" text="Show Movies" textFill="WHITE" />
                </children>
             </AnchorPane>
          </left>
@@ -47,7 +48,7 @@
                         </TableView>
                         <AnchorPane fx:id="anchorVisible1" prefHeight="654.0" prefWidth="818.0" style="-fx-background-color: black; -fx-background-radius: 0 0 18 0;">
                            <children>
-                              <TableView fx:id="tableUserInfo" layoutX="28.0" layoutY="22.0" prefHeight="55.0" prefWidth="766.0">
+                              <TableView fx:id="tableUserInfo" layoutX="28.0" layoutY="22.0" prefHeight="67.0" prefWidth="766.0">
                                 <columns>
                                   <TableColumn fx:id="fName" prefWidth="93.60002899169922" text="First Name" />
                                   <TableColumn fx:id="lName" prefWidth="95.19998168945312" text="Last Name" />
@@ -57,7 +58,7 @@
                                     <TableColumn fx:id="phoneNumber" prefWidth="170.39996337890625" text="Phone Number" />
                                 </columns>
                               </TableView>
-                              <TableView fx:id="tableMovies" layoutX="28.0" layoutY="104.0" prefHeight="502.0" prefWidth="766.0">
+                              <TableView fx:id="tableMovies" layoutX="28.0" layoutY="132.0" prefHeight="474.0" prefWidth="766.0">
                                 <columns>
                                   <TableColumn fx:id="name" prefWidth="765.6000045776367" text="Name" />
                                 </columns>

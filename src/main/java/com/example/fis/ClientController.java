@@ -80,7 +80,7 @@ public class ClientController implements Initializable {
     private TableView<DataTableClient> tabel;
 
     @FXML
-    private TableView<?> tableMovies;
+    private TableView<FilmsData> tableMovies;
 
     @FXML
     private TableView<UserData> tableUserInfo;
@@ -99,9 +99,8 @@ public class ClientController implements Initializable {
     ObservableList<DataTableClient> data = FXCollections.observableArrayList();
     private int index=0;
     @FXML
-    void showMovies(){
-        tabel.setVisible(true);
-        anchorVisible1.setVisible(false);
+    void showMoviesInit(){
+
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
 
@@ -141,11 +140,10 @@ public class ClientController implements Initializable {
     }
 
     ObservableList<UserData> dataProfile = FXCollections.observableArrayList();
-    ObservableList<FilmsData> dataFilmsDeleted = FXCollections.observableArrayList();
+    ObservableList<FilmsData> dataFilms = FXCollections.observableArrayList();
     @FXML
-    void showProfile(ActionEvent event) {
-        tabel.setVisible(false);
-        anchorVisible1.setVisible(true);
+    void showProfileInit() {
+
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
 
@@ -181,6 +179,44 @@ public class ClientController implements Initializable {
             fName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFName()));
             lName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLName()));
             tableUserInfo.setItems(dataProfile);
+
+            statement.close();
+            connection.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
+
+            // create a new JDBC statement
+            Statement statement = connection.createStatement();
+            Statement statement2 = connection.createStatement();
+
+            ResultSet rs = statement.executeQuery("SELECT Film.name from Film join Reservations R on Film.id_film = R.id_film join ReservationsUser RU on R.id_reservation = RU.id_reservation join UserInfo UI on RU.id_user = UI.account_id where UI.username='"+User.getUsername()+"'");
+            ResultSet rs2 = statement2.executeQuery("SELECT DeletedFilms.name from DeletedFilms  join UserInfo UI on UI.account_id = DeletedFilms.id_user where UI.username='"+User.getUsername()+"'");
+
+            // Loop through the result set and add each row to the observable list
+            while (rs.next()) {
+                String name = rs.getString("name");
+                dataFilms.add(new FilmsData(name));
+                System.out.println(name);
+
+            }
+
+            while (rs2.next()) {
+                String name = rs2.getString("name");
+                dataFilms.add(new FilmsData(name));
+                System.out.println(name);
+            }
+
+
+            // Define the columns for the TableView
+
+
+            name.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+
+            tableMovies.setItems(dataFilms);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -188,8 +224,8 @@ public class ClientController implements Initializable {
 
     @FXML
     void showSeatChoice(ActionEvent event) {
-//        borderPane.setVisible(false);
-//        seatPane.setVisible(true);
+        borderPane.setVisible(false);
+        seatPane.setVisible(true);
     }
 
     private Stage stage;
@@ -207,7 +243,7 @@ public class ClientController implements Initializable {
         closeButton.setRipplerFill(Color.TRANSPARENT);
         tabel.setVisible(true);
         anchorVisible1.setVisible(false);
-        showMovies();
+
 
         pane.setOnMousePressed(mouseEvent -> {
             x = mouseEvent.getSceneX();
@@ -219,6 +255,18 @@ public class ClientController implements Initializable {
             stage.setY(mouseEvent.getScreenY() - y);
         });
 
+        showProfileInit();
+        showMoviesInit();
+
 }
 
+    public void showProfile(ActionEvent event) {
+        tabel.setVisible(false);
+        anchorVisible1.setVisible(true);
+    }
+
+    public void showMovies(ActionEvent event) {
+        tabel.setVisible(true);
+        anchorVisible1.setVisible(false);
+    }
 }
