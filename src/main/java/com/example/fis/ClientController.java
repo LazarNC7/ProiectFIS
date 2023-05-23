@@ -40,7 +40,7 @@ public class ClientController implements Initializable {
     private JFXButton closeButton;
 
     @FXML
-    private TableColumn<DataTableClient, String> dateT;
+    private TableColumn<DataClass, String> dateT;
 
     @FXML
     private TableColumn<UserData, String> email;
@@ -49,7 +49,7 @@ public class ClientController implements Initializable {
     private TableColumn<UserData, String> fName;
 
     @FXML
-    private TableColumn<DataTableClient, Integer> finish;
+    private TableColumn<DataClass, Integer> finish;
 
     @FXML
     private TableColumn<UserData, String> lName;
@@ -67,7 +67,7 @@ public class ClientController implements Initializable {
     private JFXButton profileButton;
 
     @FXML
-    private TableColumn<DataTableClient, String> roomT;
+    private TableColumn<DataClass, String> roomT;
 
     @FXML
     private AnchorPane seatPane;
@@ -76,10 +76,10 @@ public class ClientController implements Initializable {
     private JFXButton seeMoviesButton;
 
     @FXML
-    private TableColumn<DataTableClient, Integer> startT;
+    private TableColumn<DataClass, Integer> startT;
 
     @FXML
-    private TableView<DataTableClient> tabel;
+    private TableView<DataClass> tabel;
 
     @FXML
     private TableView<FilmsData> tableMovies;
@@ -88,7 +88,7 @@ public class ClientController implements Initializable {
     private TableView<UserData> tableUserInfo;
 
     @FXML
-    private TableColumn<DataTableClient, String> title;
+    private TableColumn<DataClass, String> title;
 
     @FXML
     private TableColumn<UserData, String> username;
@@ -136,7 +136,7 @@ public class ClientController implements Initializable {
         stage.close();
     }
 
-    ObservableList<DataTableClient> data = FXCollections.observableArrayList();
+    ObservableList<DataClass> data = FXCollections.observableArrayList();
     private int index=0;
     @FXML
     void showMoviesInit(){
@@ -146,7 +146,7 @@ public class ClientController implements Initializable {
 
             // create a new JDBC statement
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select start,stop,type_room,date,name from Reservations join Film F on Reservations.id_film = F.id_film");
+            ResultSet rs = statement.executeQuery("select start,stop,type_room,date,name,id_reservation from Reservations join Film F on Reservations.id_film = F.id_film");
 
 
             // Loop through the result set and add each row to the observable list
@@ -154,10 +154,13 @@ public class ClientController implements Initializable {
                 String name = rs.getString("name");
                 int stop = rs.getInt("stop");
                 int start = rs.getInt("start");
+                int id_reservation = rs.getInt("id_reservation");
                 String type_room = rs.getString("type_room");
                 String date = rs.getString("date");
-
-                data.add(new DataTableClient(name,start,stop,date,type_room));
+                Statement statement1=connection.createStatement();
+                ResultSet rs1=statement1.executeQuery("SELECT account_id from UserInfo where username='"+User.getUsername()+"'");
+                if(rs1.next())
+                    data.add(new DataClass(name,start,stop,date,type_room, rs1.getInt(1),id_reservation ));
                 //System.out.println(data.get(index).getTitle()+data.get(index).getRoomT()+data.get(index).getDateT()+data.get(index).getId_user());
                 index++;
             }
@@ -338,5 +341,32 @@ public class ClientController implements Initializable {
     public void showMovies(ActionEvent event) {
         tabel.setVisible(true);
         anchorVisible1.setVisible(false);
+    }
+
+    public void handleSeatButtonClick(ActionEvent event) {
+        JFXButton clickedButton = (JFXButton) event.getSource();
+        String seatNumber = clickedButton.getText();
+        System.out.println(clickedButton.getText());
+        // Add the seatNumber to the SQLite table
+        addSeatToTable(seatNumber);
+    }
+
+    private void addSeatToTable(String seatNumber) {
+        DataClass selectedFilm = tabel.getSelectionModel().getSelectedItem();
+        if (selectedFilm != null) {
+            try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
+                 PreparedStatement statement = connection.prepareStatement("INSERT INTO ReservationsUser (id_reservation, seat, id_user) VALUES (?, ?, ?)")) {
+                statement.setInt(1, selectedFilm.getId_reservation());
+                statement.setInt(2, Integer.parseInt(seatNumber));
+                statement.setInt(3, selectedFilm.getId_user());
+
+                statement.executeUpdate();
+                System.out.println("Reservation inserted successfully.");
+
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

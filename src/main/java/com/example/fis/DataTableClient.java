@@ -8,12 +8,15 @@ public class DataTableClient {
     private String dateT;
     private String roomT;
 
+    private int id_reservation;
+
     public DataTableClient(String title, Integer startT, Integer finish, String dateT, String roomT) {
         this.title = title;
         this.startT = startT;
         this.finish = finish;
         this.dateT = dateT;
         this.roomT = roomT;
+
     }
 
     public String getTitle() {
