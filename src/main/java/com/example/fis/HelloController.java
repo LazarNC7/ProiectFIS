@@ -92,10 +92,10 @@ public class HelloController implements Initializable {
                 if(resultSet.getInt(1)==1){
                     invalidLoginText.setVisible(false);
                     try{
-                        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("clientOptions.fxml"));
+                        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("client.fxml"));
                         Scene scene = new Scene(fxmlLoader.load());
                         Stage stageSign=new Stage();
-                        ClientOptionsController controller=fxmlLoader.getController();
+                        ClientController controller=fxmlLoader.getController();
                         scene.setFill(Color.TRANSPARENT);
                         stageSign.initStyle(StageStyle.TRANSPARENT);
                         stageSign.setScene(scene);

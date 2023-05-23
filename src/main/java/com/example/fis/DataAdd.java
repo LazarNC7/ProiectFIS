@@ -12,6 +12,7 @@ public class DataAdd {
     private String genre;
     private String length;
 
+
     public DataAdd(int id_film, int start, int stop, String type_room, String date,String name,String genre, String length) {
         this.id_film = id_film;
         this.start = start;
