@@ -15,9 +15,11 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.net.URL;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
@@ -90,6 +92,44 @@ public class ClientController implements Initializable {
 
     @FXML
     private TableColumn<UserData, String> username;
+
+    @FXML
+    private JFXButton b1;
+
+    @FXML
+    private JFXButton b10;
+
+    @FXML
+    private JFXButton b11;
+
+    @FXML
+    private JFXButton b12;
+
+    @FXML
+    private JFXButton b2;
+
+    @FXML
+    private JFXButton b3;
+
+    @FXML
+    private JFXButton b4;
+
+    @FXML
+    private JFXButton b5;
+
+    @FXML
+    private JFXButton b6;
+
+    @FXML
+    private JFXButton b7;
+
+    @FXML
+    private JFXButton b8;
+
+    @FXML
+    private JFXButton b9;
+
+    private ArrayList<JFXButton> buttons=new ArrayList<>();
 
     @FXML
     void closeWindow(ActionEvent event) {
@@ -226,7 +266,11 @@ public class ClientController implements Initializable {
     void showSeatChoice(ActionEvent event) {
         borderPane.setVisible(false);
         seatPane.setVisible(true);
+        pane.setBackground(Background.EMPTY);
     }
+
+    @FXML
+    private JFXButton closeButtonSeats;
 
     private Stage stage;
     private double x=0,y=0;
@@ -235,15 +279,41 @@ public class ClientController implements Initializable {
         this.stage = stage;
     }
 
+    @FXML
+    private AnchorPane centerPane;
+
+    @FXML
+    private AnchorPane leftPane;
+
+    @FXML
+    private AnchorPane upPane;
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         pane.setBackground(Background.EMPTY);
         borderPane.setBackground(Background.EMPTY);
         seatPane.setBackground(Background.EMPTY);
         closeButton.setRipplerFill(Color.TRANSPARENT);
+        seatPane.setBackground(Background.EMPTY);
+        leftPane.setBackground(Background.EMPTY);
+        upPane.setBackground(Background.EMPTY);
+        centerPane.setBackground(Background.EMPTY);
+
         tabel.setVisible(true);
         anchorVisible1.setVisible(false);
 
+//        buttons.add(b1);
+//        buttons.add(b2);
+//        buttons.add(b3);
+//        buttons.add(b4);
+//        buttons.add(b5);
+//        buttons.add(b6);
+//        buttons.add(b7);
+//        buttons.add(b8);
+//        buttons.add(b9);
+//        buttons.add(b10);
+//        buttons.add(b11);
+//        buttons.add(b12);
 
         pane.setOnMousePressed(mouseEvent -> {
             x = mouseEvent.getSceneX();

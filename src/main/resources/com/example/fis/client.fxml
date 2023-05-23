@@ -8,21 +8,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="pane" prefHeight="718.0" prefWidth="1019.0" style="-fx-background-radius: 18 18 18 18; -fx-background-radius: 18 0 18 0;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fis.ClientController">
+<AnchorPane fx:id="pane" prefHeight="713.0" prefWidth="1010.0" style="-fx-background-radius: 18 18 18 18; -fx-background-radius: 18 18 18 18;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fis.ClientController">
    <children>
-      <BorderPane fx:id="borderPane" layoutX="-15.0" prefHeight="731.0" prefWidth="1020.0" style="-fx-background-radius: 18 18 18 18;">
+      <BorderPane fx:id="borderPane" layoutX="-15.0" prefHeight="731.0" prefWidth="1020.0" style="-fx-background-radius: 18 18 18 18;" visible="false">
          <top>
-            <AnchorPane prefHeight="58.0" prefWidth="984.0" style="-fx-background-color: orange; -fx-background-radius: 18 18 0 18;" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="upPane" prefHeight="58.0" prefWidth="984.0" style="-fx-background-color: orange; -fx-background-radius: 18 18 0 18;" BorderPane.alignment="CENTER">
                <children>
                   <JFXButton fx:id="closeButton" layoutX="994.0" layoutY="16.0" onAction="#closeWindow" text="X" textFill="WHITE" />
                </children>
             </AnchorPane>
          </top>
          <left>
-            <AnchorPane prefHeight="652.0" prefWidth="190.0" style="-fx-background-color: linear-gradient(to top, black, orange); -fx-background-radius: 0 0 0 18;" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="leftPane" prefHeight="652.0" prefWidth="190.0" style="-fx-background-color: linear-gradient(to top, black, orange); -fx-background-radius: 0 0 0 18;" BorderPane.alignment="CENTER">
                <children>
                   <JFXButton fx:id="profileButton" buttonType="RAISED" layoutX="29.0" layoutY="270.0" onAction="#showProfile" prefHeight="38.0" prefWidth="139.0" text="Profile" textFill="WHITE" />
-                  <JFXButton fx:id="bookMovieButton" buttonType="RAISED" layoutX="29.0" layoutY="350.0" onAction="#showSeatChoice" prefHeight="37.0" prefWidth="140.0" text="Book Movie" textFill="WHITE" />
+                  <JFXButton fx:id="bookMovieButton" buttonType="RAISED" layoutX="29.0" layoutY="347.0" onAction="#showSeatChoice" prefHeight="37.0" prefWidth="140.0" text="Book Movie" textFill="WHITE" />
                   <Text fill="WHITE" layoutX="62.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Client">
                      <font>
                         <Font name="Verdana Bold" size="23.0" />
@@ -33,7 +33,7 @@
             </AnchorPane>
          </left>
          <center>
-            <AnchorPane prefHeight="652.0" prefWidth="798.0" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="centerPane" prefHeight="652.0" prefWidth="798.0" BorderPane.alignment="CENTER">
                <children>
                   <AnchorPane layoutX="32.0" layoutY="10.0" prefHeight="662.0" prefWidth="783.0" style="-fx-border-color: black;">
                      <children>
@@ -71,7 +71,7 @@
             </AnchorPane>
          </center>
       </BorderPane>
-      <AnchorPane fx:id="seatPane" prefHeight="731.0" prefWidth="958.0" visible="false">
+      <AnchorPane fx:id="seatPane" prefHeight="731.0" prefWidth="958.0">
          <children>
             <AnchorPane layoutX="219.0" layoutY="82.0" prefHeight="518.0" prefWidth="598.0" style="-fx-background-color: linear-gradient(to right, orange, black); -fx-background-radius: 0 18 18 0;">
                <children>
@@ -80,25 +80,24 @@
                         <Font name="Verdana Bold" size="25.0" />
                      </font>
                   </Text>
-                  <JFXButton buttonType="RAISED" layoutX="170.0" layoutY="133.0" style="-fx-background-color: white;" />
-                  <JFXButton buttonType="RAISED" layoutX="258.0" layoutY="133.0" style="-fx-background-color: white;" />
-                  <JFXButton buttonType="RAISED" layoutX="357.0" layoutY="133.0" style="-fx-background-color: white;" />
-                  <JFXButton buttonType="RAISED" layoutX="79.0" layoutY="133.0" style="-fx-background-color: white;" />
-                  <JFXButton buttonType="RAISED" layoutX="79.0" layoutY="185.0" style="-fx-background-color: white;" />
-                  <JFXButton buttonType="RAISED" layoutX="170.0" layoutY="185.0" style="-fx-background-color: white;" />
-                  <JFXButton buttonType="RAISED" layoutX="258.0" layoutY="185.0" style="-fx-background-color: white;" />
-                  <JFXButton buttonType="RAISED" layoutX="357.0" layoutY="185.0" style="-fx-background-color: white;" />
-                  <JFXButton buttonType="RAISED" layoutX="79.0" layoutY="233.0" style="-fx-background-color: white;" />
-                  <JFXButton buttonType="RAISED" layoutX="79.0" layoutY="285.0" style="-fx-background-color: white;" />
-                  <JFXButton buttonType="RAISED" layoutX="357.0" layoutY="233.0" style="-fx-background-color: white;" />
-                  <JFXButton buttonType="RAISED" layoutX="258.0" layoutY="233.0" style="-fx-background-color: white;" />
-                  <JFXButton buttonType="RAISED" layoutX="170.0" layoutY="233.0" style="-fx-background-color: white;" />
-                  <JFXButton buttonType="RAISED" layoutX="357.0" layoutY="285.0" style="-fx-background-color: white;" />
-                  <JFXButton buttonType="RAISED" layoutX="258.0" layoutY="285.0" style="-fx-background-color: white;" />
-                  <JFXButton buttonType="RAISED" layoutX="170.0" layoutY="285.0" style="-fx-background-color: white;" />
+                  <JFXButton fx:id="b12" buttonType="RAISED" layoutX="390.0" layoutY="311.0" minHeight="50.0" minWidth="50.0" style="-fx-background-color: white;" />
+                  <JFXButton fx:id="b11" buttonType="RAISED" layoutX="284.0" layoutY="311.0" minHeight="50.0" minWidth="50.0" style="-fx-background-color: white;" />
+                  <JFXButton fx:id="b10" buttonType="RAISED" layoutX="178.0" layoutY="311.0" minHeight="50.0" minWidth="50.0" style="-fx-background-color: white;" />
+                  <JFXButton fx:id="b9" buttonType="RAISED" layoutX="76.0" layoutY="311.0" minHeight="50.0" minWidth="50.0" style="-fx-background-color: white;" />
+                  <JFXButton fx:id="b1" buttonType="RAISED" layoutX="76.0" layoutY="155.0" minHeight="50.0" minWidth="50.0" style="-fx-background-color: white;" />
+                  <JFXButton fx:id="b8" buttonType="RAISED" layoutX="390.0" layoutY="234.0" minHeight="50.0" minWidth="50.0" style="-fx-background-color: white;" />
+                  <JFXButton fx:id="b7" buttonType="RAISED" layoutX="284.0" layoutY="234.0" minHeight="50.0" minWidth="50.0" style="-fx-background-color: white;" />
+                  <JFXButton fx:id="b6" buttonType="RAISED" layoutX="178.0" layoutY="234.0" minHeight="50.0" minWidth="50.0" style="-fx-background-color: white;" />
+                  <JFXButton fx:id="b5" buttonType="RAISED" layoutX="76.0" layoutY="234.0" minHeight="50.0" minWidth="50.0" style="-fx-background-color: white;" />
+                  <JFXButton fx:id="b4" buttonType="RAISED" layoutX="390.0" layoutY="155.0" minHeight="50.0" minWidth="50.0" style="-fx-background-color: white;" />
+                  <JFXButton fx:id="b3" buttonType="RAISED" layoutX="284.0" layoutY="155.0" minHeight="50.0" minWidth="50.0" style="-fx-background-color: white;" />
+                  <JFXButton fx:id="b2" buttonType="RAISED" layoutX="178.0" layoutY="155.0" minHeight="50.0" minWidth="50.0" style="-fx-background-color: white;" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="22.0" layoutY="68.0" prefHeight="546.0" prefWidth="204.0" style="-fx-background-color: linear-gradient(to right, black, orange); -fx-background-radius: 18 18 18 18;" />
+            <AnchorPane layoutX="22.0" layoutY="68.0" prefHeight="546.0" prefWidth="204.0" style="-fx-background-color: linear-gradient(to right, black, orange); -fx-background-radius: 18 18 18 18;">
+               <children>
+                  <JFXButton fx:id="closeButtonSeats" layoutX="24.0" layoutY="20.0" onAction="#closeWindow" text="X" textFill="WHITE" />
+               </children></AnchorPane>
          </children>
       </AnchorPane>
    </children>
