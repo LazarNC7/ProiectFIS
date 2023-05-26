@@ -110,6 +110,7 @@ public class HelloController implements Initializable {
         try(
             Connection connectiondb=connection.geConnection();
             Statement statement=connectiondb.createStatement();
+
             ResultSet resultSet=statement.executeQuery(verify)){
 
 
