@@ -106,12 +106,12 @@ public class HelloController implements Initializable {
 
     public void validateLogin(){
         DatabaseConnection connection=new DatabaseConnection();
-        Connection connectiondb=connection.geConnection();
         String verify = "select count(1) from UserInfo where username ='"+username.getText()+"' and password='"+encodePassword(username.getText(),password.getText())+"'";
-
-        try{
+        try(
+            Connection connectiondb=connection.geConnection();
             Statement statement=connectiondb.createStatement();
-            ResultSet resultSet=statement.executeQuery(verify);
+            ResultSet resultSet=statement.executeQuery(verify)){
+
 
             while (resultSet.next()){
                 if(resultSet.getInt(1)==1){
