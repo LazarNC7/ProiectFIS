@@ -89,7 +89,7 @@
                               <JFXButton fx:id="insertButton" layoutX="500.0" layoutY="189.0" text="Insert Photo" textFill="ORANGE" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="anchorVisible2" layoutX="-2.0" prefHeight="642.0" prefWidth="788.0" style="-fx-background-color: black;" visible="false">
+                        <AnchorPane fx:id="anchorVisible2" layoutX="-2.0" onMousePressed="#restartText" prefHeight="642.0" prefWidth="788.0" style="-fx-background-color: black;">
                            <children>
                               <Text fill="WHITE" layoutX="278.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADD RESERVATION">
                                  <font>
@@ -107,6 +107,9 @@
                               <Text fill="WHITE" layoutX="437.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pick Finish" />
                               <Text fill="WHITE" layoutX="279.0" layoutY="408.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pick Name" />
                               <JFXButton fx:id="applyAddR" layoutX="345.0" layoutY="544.0" onAction="#addChanges" text="Apply" textFill="WHITE" />
+                              <Text fx:id="collisionDetected" fill="RED" layoutX="271.0" layoutY="520.0" strokeType="OUTSIDE" strokeWidth="0.0" text="There is a collision. Pick another time" visible="false" />
+                              <Text fx:id="pickAnotherHour1" fill="RED" layoutX="437.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The hour selected is not consistent with the length" visible="false" />
+                              <Text fx:id="pickAnotherHour2" fill="RED" layoutX="437.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="of the film. Pick another hour" visible="false" />
                            </children>
                         </AnchorPane>
                      </children>

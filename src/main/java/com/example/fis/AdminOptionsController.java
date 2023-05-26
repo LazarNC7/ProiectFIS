@@ -129,26 +129,58 @@ public class AdminOptionsController implements Initializable {
     @FXML
     JFXButton applyAddR;
 
-    public void addChanges(ActionEvent event){
-        String queryString = "SELECT id_film FROM Film WHERE name = ?";
-        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
-             PreparedStatement statement = connection.prepareStatement(queryString);
-             PreparedStatement statement1 = connection.prepareStatement("INSERT INTO Reservations (id_film, start, stop, type_room, date) VALUES (?, ?, ?,?,?)")) {
+    private boolean checkCollision(String room, DatePicker dp, int start, int stop){
+        try{
+            Connection connection=DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
+            PreparedStatement statement=connection.prepareStatement("select start, stop, type_room, date, F.length from Reservations join Film F on F.id_film = Reservations.id_film");
+            ResultSet rs=statement.executeQuery();
+            while(rs.next()){
+                int strt=rs.getInt(1);
+                int stp=rs.getInt(2);
+                String tRoom=rs.getString(3);
+                String date=rs.getString(4);
+                int length=rs.getInt(5);
+                if(stop-start!=(length%60 +1)) return false;
+                if(date.equals(dp.toString())&& tRoom.equals(room) && start <= strt && stop <= stp) return false;
 
-            statement.setString(1, nameAddR.getValue());
-            ResultSet resultSet = statement.executeQuery();
-            statement1.setInt(1, resultSet.getInt(1));
-            statement1.setInt(2, startAddR.getValue());
-            statement1.setInt(3, stopAddR.getValue());
-            statement1.setString(4, roomAddR.getValue());
-            statement1.setString(5, datePickerAddR.getValue().toString());
-            statement1.executeUpdate();
-            System.out.println("Reservation inserted successfully.");
-            statement1.close();
-            statement.close();
+            }
 
-        } catch (SQLException e) {
+        }catch (SQLException e){
             e.printStackTrace();
+        }
+
+        return true;
+    }
+
+
+    public void addChanges(ActionEvent event){
+        if(startAddR.toString()!=null && stopAddR.toString()!=null&& roomAddR.toString()!=null && datePickerAddR.getValue()!=null) {
+            if(!checkCollision(roomAddR.toString(), datePickerAddR, Integer.parseInt(startAddR.toString()), Integer.parseInt(stopAddR.toString()))){
+                collisionDetected.setVisible(true);
+                pickAnotherHour1.setVisible(true);
+                pickAnotherHour2.setVisible(true);
+            }else {
+                String queryString = "SELECT id_film FROM Film WHERE name = ?";
+                try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
+                     PreparedStatement statement = connection.prepareStatement(queryString);
+                     PreparedStatement statement1 = connection.prepareStatement("INSERT INTO Reservations (id_film, start, stop, type_room, date) VALUES (?, ?, ?,?,?)")) {
+
+                    statement.setString(1, nameAddR.getValue());
+                    ResultSet resultSet = statement.executeQuery();
+                    statement1.setInt(1, resultSet.getInt(1));
+                    statement1.setInt(2, startAddR.getValue());
+                    statement1.setInt(3, stopAddR.getValue());
+                    statement1.setString(4, roomAddR.getValue());
+                    statement1.setString(5, datePickerAddR.getValue().toString());
+                    statement1.executeUpdate();
+                    System.out.println("Reservation inserted successfully.");
+                    statement1.close();
+                    statement.close();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -440,22 +472,33 @@ public class AdminOptionsController implements Initializable {
     @FXML
     JFXButton insertButton=new JFXButton();
 
+    @FXML
+    private Text collisionDetected;
+
+    @FXML
+    private Text pickAnotherHour1;
+    @FXML
+    private Text pickAnotherHour2;
+    @FXML
+    private Text pickAnotherRoom;
+
     private String imagePath;
     public void addMovies(ActionEvent event) {
 
-        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
-             PreparedStatement statement = connection.prepareStatement("INSERT INTO Film (name, genre, length, image) VALUES (?, ?, ?,?)")) {
-            statement.setString(1, nameAdd.getText());
-            statement.setString(2, genreAdd.getText());
-            statement.setInt(3, Integer.parseInt(lengthAdd.getText()));
-            statement.setString(4,imagePath);
-            statement.executeUpdate();
-            System.out.println("Film inserted successfully.");
-            statement.close();
+        if (nameAdd.getText() != null && genreAdd.getText() != null && lengthAdd.getText() != null && imageViewAdd.getImage() != null)
+            try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
+                 PreparedStatement statement = connection.prepareStatement("INSERT INTO Film (name, genre, length, image) VALUES (?, ?, ?,?)")) {
+                statement.setString(1, nameAdd.getText());
+                statement.setString(2, genreAdd.getText());
+                statement.setInt(3, Integer.parseInt(lengthAdd.getText()));
+                statement.setString(4, imagePath);
+                statement.executeUpdate();
+                System.out.println("Film inserted successfully.");
+                statement.close();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
     }
 
 
@@ -497,5 +540,11 @@ public class AdminOptionsController implements Initializable {
         controller.setStage(stageSign);
         stageSign.show();
         stage.close();
+    }
+
+    public void restartText(MouseEvent mouseEvent) {
+        collisionDetected.setVisible(false);
+        pickAnotherHour1.setVisible(false);
+        pickAnotherHour2.setVisible(false);
     }
 }
