@@ -26,6 +26,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 import java.io.File;
@@ -362,7 +363,7 @@ public class AdminOptionsController implements Initializable {
                     ResultSet rs = statement.executeQuery();
                     if (rs.next()) {
                         System.out.println(rs.getString(1));
-                        Image image = new Image(rs.getString(1), 183, 179, false, true);
+                        Image image = new Image(rs.getString(1), 150, 150, false, true);
                         imageDelete.setImage(image);
                     } else {
                         // Clear the image if no result is found
@@ -468,7 +469,7 @@ public class AdminOptionsController implements Initializable {
         if (selectedFile != null) {
             try {
                 imagePath = selectedFile.getAbsolutePath();
-                Image image = new Image(imagePath, 180, 219, false, true);
+                Image image = new Image(imagePath, 150, 150, false, true);
                 imageViewAdd.setImage(image);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -483,5 +484,18 @@ public class AdminOptionsController implements Initializable {
         anchorVisible1.setVisible(false);
         tabel.setVisible(false);
         anchorVisible.setVisible(false);
+    }
+
+    public void goToLoginPage(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stageSign = new Stage();
+        HelloController controller = fxmlLoader.getController();
+        scene.setFill(Color.TRANSPARENT);
+        stageSign.setScene(scene);
+        stageSign.initStyle(StageStyle.TRANSPARENT);
+        controller.setStage(stageSign);
+        stageSign.show();
+        stage.close();
     }
 }
