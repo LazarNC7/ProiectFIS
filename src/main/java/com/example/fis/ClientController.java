@@ -6,17 +6,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
@@ -368,5 +372,32 @@ public class ClientController implements Initializable {
                 e.printStackTrace();
             }
         }
+
+
+    }
+
+    @FXML
+    private JFXButton loginButton;
+    public void goToLoginPage(ActionEvent event) throws IOException {
+        User.setPassword(null);
+        User.setUsername(null);
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stageSign = new Stage();
+        HelloController controller = fxmlLoader.getController(); // Use HelloController instead of ClientController
+        scene.setFill(Color.TRANSPARENT);
+        stageSign.setScene(scene);
+        stageSign.initStyle(StageStyle.TRANSPARENT);
+        controller.setStage(stageSign);
+        stageSign.show();
+        stage.close();
+    }
+
+    public void closeWindowSeats(ActionEvent event) {
+        seatPane.setVisible(false);
+        borderPane.setVisible(true);
+        BackgroundFill backgroundFill = new BackgroundFill(Color.WHITE, null, null);
+        Background background = new Background(backgroundFill);
+        centerPane.setBackground(background);
     }
 }

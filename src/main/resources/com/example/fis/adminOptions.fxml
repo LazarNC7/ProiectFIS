@@ -25,15 +25,16 @@
          <left>
             <AnchorPane prefHeight="652.0" prefWidth="190.0" style="-fx-background-color: linear-gradient(to top, black, orange); -fx-background-radius: 0 0 0 18;" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton fx:id="addButton" buttonType="RAISED" layoutX="36.0" layoutY="240.0" onAction="#showAdd" prefHeight="38.0" prefWidth="139.0" text="Add Movies" textFill="WHITE" />
-                  <JFXButton fx:id="deleteReservationButton" buttonType="RAISED" layoutX="36.0" layoutY="307.0" onAction="#deleteReservation" prefHeight="37.0" prefWidth="140.0" text="Delete Reservation" textFill="WHITE" />
+                  <JFXButton fx:id="addButton" buttonType="RAISED" layoutX="36.0" layoutY="223.0" onAction="#showAdd" prefHeight="38.0" prefWidth="139.0" text="Add Movies" textFill="WHITE" />
+                  <JFXButton fx:id="deleteReservationButton" buttonType="RAISED" layoutX="36.0" layoutY="281.0" onAction="#deleteReservation" prefHeight="37.0" prefWidth="140.0" text="Delete Reservation" textFill="WHITE" />
                   <Text fill="WHITE" layoutX="62.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin">
                      <font>
                         <Font name="Verdana Bold" size="23.0" />
                      </font>
                   </Text>
-                  <JFXButton fx:id="deleteMovieButton" layoutX="60.0" layoutY="391.0" onAction="#showDelete" text="Delete Movie" textFill="WHITE" />
-                  <JFXButton fx:id="showReservationsButton" layoutX="54.0" layoutY="451.0" onAction="#showReservation" text="Add Reservation" textFill="WHITE" />
+                  <JFXButton fx:id="deleteMovieButton" layoutX="60.0" layoutY="344.0" onAction="#showDelete" text="Delete Movie" textFill="WHITE" />
+                  <JFXButton fx:id="showReservationsButton" layoutX="54.0" layoutY="402.0" onAction="#showReservation" text="Add Reservation" textFill="WHITE" />
+                  <JFXButton fx:id="loginButton" buttonType="RAISED" layoutX="65.0" layoutY="456.0" onAction="#goToLoginPage" text="Login Page" textFill="WHITE" />
                </children>
             </AnchorPane>
          </left>
@@ -42,13 +43,13 @@
                <children>
                   <AnchorPane layoutX="32.0" layoutY="14.0" prefHeight="633.0" prefWidth="735.0" style="-fx-border-color: black;">
                      <children>
-                        <TableView fx:id="tabel" layoutX="21.0" layoutY="20.0" prefHeight="611.0" prefWidth="702.0" visible="false">
+                        <TableView fx:id="tabel" layoutX="21.0" layoutY="20.0" prefHeight="611.0" prefWidth="742.0">
                           <columns>
                             <TableColumn fx:id="title" prefWidth="300.0" text="Movie Title" />
                             <TableColumn fx:id="dateT" prefWidth="100.0" text="Date" />
                               <TableColumn fx:id="startT" prefWidth="100.0" text="Start" />
-                              <TableColumn fx:id="finish" maxWidth="1.7976931348623157E308" prefWidth="100.0" text="Finish" />
-                              <TableColumn fx:id="roomT" prefWidth="100.0" text="Cinema room" />
+                              <TableColumn fx:id="finish" maxWidth="1.7976931348623157E308" prefWidth="116.7999267578125" text="Finish" />
+                              <TableColumn fx:id="roomT" prefWidth="125.60009765625" text="Cinema room" />
                           </columns>
                         </TableView>
                         <AnchorPane fx:id="anchorVisible1" prefHeight="643.0" prefWidth="751.0" style="-fx-background-color: black;" visible="false">
@@ -88,7 +89,7 @@
                               <JFXButton fx:id="insertButton" layoutX="500.0" layoutY="189.0" text="Insert Photo" textFill="ORANGE" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="anchorVisible2" layoutX="-2.0" prefHeight="642.0" prefWidth="784.0" style="-fx-background-color: black;">
+                        <AnchorPane fx:id="anchorVisible2" layoutX="-2.0" prefHeight="642.0" prefWidth="784.0" style="-fx-background-color: black;" visible="false">
                            <children>
                               <Text fill="WHITE" layoutX="278.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADD RESERVATION">
                                  <font>

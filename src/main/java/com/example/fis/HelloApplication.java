@@ -26,4 +26,9 @@ public class HelloApplication extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+    Stage stage=new Stage();
+    public void setStage(Stage stage) {
+        this.stage=stage;
+    }
 }
