@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.security.MessageDigest;
 
 public class HelloApplication extends Application {
     @Override
@@ -31,4 +32,6 @@ public class HelloApplication extends Application {
     public void setStage(Stage stage) {
         this.stage=stage;
     }
+
+
 }

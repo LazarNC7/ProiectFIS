@@ -83,7 +83,7 @@ public class HelloController implements Initializable {
         });
     }
 
-    private static MessageDigest getMessageDigest() {
+    static MessageDigest getMessageDigest() {
         MessageDigest md;
         try {
             md = MessageDigest.getInstance("SHA-512");
@@ -93,7 +93,7 @@ public class HelloController implements Initializable {
         return md;
     }
 
-    private static String encodePassword(String salt, String password) {
+    static String encodePassword(String salt, String password) {
         MessageDigest md = getMessageDigest();
         md.update(salt.getBytes(StandardCharsets.UTF_8));
 
@@ -183,4 +183,7 @@ public class HelloController implements Initializable {
         }
     }
 
+    public Stage getStage() {
+        return stage;
+    }
 }
