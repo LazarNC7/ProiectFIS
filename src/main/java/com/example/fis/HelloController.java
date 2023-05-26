@@ -145,7 +145,6 @@ public class HelloController implements Initializable {
     public void checkEmpty(ActionEvent event){
         if(username.getText().isBlank()==false && password.getText().isBlank()==false){
             validateLogin();
-
         }
     }
 

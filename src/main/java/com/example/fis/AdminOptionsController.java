@@ -129,21 +129,45 @@ public class AdminOptionsController implements Initializable {
     @FXML
     JFXButton applyAddR;
 
-    private boolean checkCollision(String room, DatePicker dp, int start, int stop){
+    private boolean checkCollision(String room, DatePicker dp, int start, int stop, String name){
         try{
             Connection connection=DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
-            PreparedStatement statement=connection.prepareStatement("select start, stop, type_room, date, F.length from Reservations join Film F on F.id_film = Reservations.id_film");
+            PreparedStatement statement1=connection.prepareStatement("select length from Film where name='" + name +
+                    "'");
+            ResultSet rs1=statement1.executeQuery();
+            System.out.println(-1);
+            if(rs1.next()) {
+                System.out.println(-1);
+                int length=rs1.getInt(1);
+                if ((stop - start) != ((length / 60) + 1)) {
+                    System.out.println(name + " " + length);
+                    System.out.println(stop - start + "!=" + (((rs1.getInt(1) / 60) + 1)));
+                    pickAnotherHour1.setVisible(true);
+                    pickAnotherHour2.setVisible(true);
+                    return false;
+
+                }
+            }
+            PreparedStatement statement=connection.prepareStatement("select start, stop, type_room, date from Reservations");
             ResultSet rs=statement.executeQuery();
             while(rs.next()){
                 int strt=rs.getInt(1);
                 int stp=rs.getInt(2);
                 String tRoom=rs.getString(3);
                 String date=rs.getString(4);
-                int length=rs.getInt(5);
-                if(stop-start!=(length%60 +1)) return false;
-                if(date.equals(dp.toString())&& tRoom.equals(room) && start <= strt && stop <= stp) return false;
+
+
+                if(date.equals(dp.getValue().toString())&& tRoom.equals(room) && start<=stp && stop >= strt){
+                    collisionDetected.setVisible(true);
+                    return false;
+
+                }
 
             }
+
+            connection.close();
+            statement.close();
+            statement1.close();
 
         }catch (SQLException e){
             e.printStackTrace();
@@ -153,13 +177,13 @@ public class AdminOptionsController implements Initializable {
     }
 
 
-    public void addChanges(ActionEvent event){
-        if(startAddR.toString()!=null && stopAddR.toString()!=null&& roomAddR.toString()!=null && datePickerAddR.getValue()!=null) {
-            if(!checkCollision(roomAddR.toString(), datePickerAddR, Integer.parseInt(startAddR.toString()), Integer.parseInt(stopAddR.toString()))){
-                collisionDetected.setVisible(true);
-                pickAnotherHour1.setVisible(true);
-                pickAnotherHour2.setVisible(true);
-            }else {
+    public void addChanges(ActionEvent event) {
+        restartText();
+        if (startAddR.getValue() != null && stopAddR.getValue() != null && roomAddR.getValue() != null && datePickerAddR.getValue() != null && nameAddR.getValue() != null) {
+            int start = Integer.parseInt(startAddR.getValue().toString());
+            int stop = Integer.parseInt(stopAddR.getValue().toString());
+
+            if (checkCollision(roomAddR.getValue().toString(), datePickerAddR, start, stop, nameAddR.getValue().toString())) {
                 String queryString = "SELECT id_film FROM Film WHERE name = ?";
                 try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
                      PreparedStatement statement = connection.prepareStatement(queryString);
@@ -167,23 +191,27 @@ public class AdminOptionsController implements Initializable {
 
                     statement.setString(1, nameAddR.getValue());
                     ResultSet resultSet = statement.executeQuery();
-                    statement1.setInt(1, resultSet.getInt(1));
-                    statement1.setInt(2, startAddR.getValue());
-                    statement1.setInt(3, stopAddR.getValue());
-                    statement1.setString(4, roomAddR.getValue());
-                    statement1.setString(5, datePickerAddR.getValue().toString());
-                    statement1.executeUpdate();
-                    System.out.println("Reservation inserted successfully.");
-                    statement1.close();
-                    statement.close();
+                    if (resultSet.next()) {
+                        statement1.setInt(1, resultSet.getInt(1));
+                        statement1.setInt(2, start);
+                        statement1.setInt(3, stop);
+                        statement1.setString(4, roomAddR.getValue());
+                        statement1.setString(5, datePickerAddR.getValue().toString());
+                        statement1.executeUpdate();
+                        System.out.println("Reservation inserted successfully.");
+                    } else {
+                        System.out.println("Film not found.");
+                    }
 
+                    connection.close();
+                    statement.close();
+                    statement1.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
         }
     }
-
 
 
     @FXML
@@ -220,6 +248,10 @@ public class AdminOptionsController implements Initializable {
 
                 // Remove the selected film from the TableView
                 tabel.getItems().remove(selectedFilm);
+                connection.close();
+                insertStatement2.close();
+                insertStatement3.close();
+                insertStatement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
                 // Handle any database errors
@@ -361,6 +393,8 @@ public class AdminOptionsController implements Initializable {
         dateT.setCellValueFactory(new PropertyValueFactory<DataClass, String>("dateT"));
         tabel.setItems(data);
 
+        connection.close();
+        statement.close();
 
     }
 
@@ -542,7 +576,7 @@ public class AdminOptionsController implements Initializable {
         stage.close();
     }
 
-    public void restartText(MouseEvent mouseEvent) {
+    public void restartText() {
         collisionDetected.setVisible(false);
         pickAnotherHour1.setVisible(false);
         pickAnotherHour2.setVisible(false);
