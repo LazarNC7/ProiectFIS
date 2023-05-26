@@ -84,6 +84,8 @@ public class AdminLoginController implements Initializable {
                     invalidLoginText.setVisible(true);
                 }
             }
+            connectiondb.close();
+            statement.close();
         }catch (Exception e){
             e.printStackTrace();
         }

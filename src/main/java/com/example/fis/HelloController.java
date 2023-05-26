@@ -137,6 +137,9 @@ public class HelloController implements Initializable {
                     invalidLoginText.setVisible(true);
                 }
             }
+
+            connectiondb.close();
+
         }catch (Exception e){
             e.printStackTrace();
         }

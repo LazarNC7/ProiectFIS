@@ -129,53 +129,64 @@ public class AdminOptionsController implements Initializable {
     @FXML
     JFXButton applyAddR;
 
-    private boolean checkCollision(String room, DatePicker dp, int start, int stop, String name){
-        try{
-            Connection connection=DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
-            PreparedStatement statement1=connection.prepareStatement("select length from Film where name='" + name +
-                    "'");
-            ResultSet rs1=statement1.executeQuery();
-            System.out.println(-1);
-            if(rs1.next()) {
-                System.out.println(-1);
-                int length=rs1.getInt(1);
+    private boolean checkCollision(String room, DatePicker dp, int start, int stop, String name) {
+        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
+             PreparedStatement statement1 = connection.prepareStatement("SELECT length FROM Film WHERE name = ?")) {
+
+            statement1.setString(1, name);
+            ResultSet rs1 = statement1.executeQuery();
+
+            if (rs1.next()) {
+                int length = rs1.getInt(1);
                 if ((stop - start) != ((length / 60) + 1)) {
                     System.out.println(name + " " + length);
                     System.out.println(stop - start + "!=" + (((rs1.getInt(1) / 60) + 1)));
                     pickAnotherHour1.setVisible(true);
                     pickAnotherHour2.setVisible(true);
                     return false;
-
                 }
             }
-            PreparedStatement statement=connection.prepareStatement("select start, stop, type_room, date from Reservations");
-            ResultSet rs=statement.executeQuery();
-            while(rs.next()){
-                int strt=rs.getInt(1);
-                int stp=rs.getInt(2);
-                String tRoom=rs.getString(3);
-                String date=rs.getString(4);
 
+            PreparedStatement statement = connection.prepareStatement("SELECT start, stop, type_room, date FROM Reservations");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                int strt = rs.getInt(1);
+                int stp = rs.getInt(2);
+                String tRoom = rs.getString(3);
+                String date = rs.getString(4);
 
-                if(date.equals(dp.getValue().toString())&& tRoom.equals(room) && start<=stp && stop >= strt){
+                if (date.equals(dp.getValue().toString()) && tRoom.equals(room) && start <= stp && stop >= strt) {
                     collisionDetected.setVisible(true);
                     return false;
-
                 }
-
             }
 
-            connection.close();
-            statement.close();
-            statement1.close();
-
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return true;
     }
 
+    private Integer getId(String name) {
+        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
+             PreparedStatement statement = connection.prepareStatement("SELECT id_film FROM Film WHERE name = ?")) {
+
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (!resultSet.next()) {
+                return -1;
+            } else {
+                return resultSet.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     public void addChanges(ActionEvent event) {
         restartText();
@@ -184,35 +195,29 @@ public class AdminOptionsController implements Initializable {
             int stop = Integer.parseInt(stopAddR.getValue().toString());
 
             if (checkCollision(roomAddR.getValue().toString(), datePickerAddR, start, stop, nameAddR.getValue().toString())) {
-                String queryString = "SELECT id_film FROM Film WHERE name = ?";
-                try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
-                     PreparedStatement statement = connection.prepareStatement(queryString);
-                     PreparedStatement statement1 = connection.prepareStatement("INSERT INTO Reservations (id_film, start, stop, type_room, date) VALUES (?, ?, ?,?,?)")) {
+                try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite")) {
+                    Integer id = getId(nameAddR.getValue().toString());
 
-                    statement.setString(1, nameAddR.getValue());
-                    ResultSet resultSet = statement.executeQuery();
-                    if (resultSet.next()) {
-                        statement1.setInt(1, resultSet.getInt(1));
+                    if (id != null && id != -1) {
+                        PreparedStatement statement1 = connection.prepareStatement("INSERT INTO Reservations (id_film, start, stop, type_room, date) VALUES (?, ?, ?,?,?)");
+                        statement1.setInt(1, id);
                         statement1.setInt(2, start);
                         statement1.setInt(3, stop);
                         statement1.setString(4, roomAddR.getValue());
                         statement1.setString(5, datePickerAddR.getValue().toString());
                         statement1.executeUpdate();
+                        statement1.close();
+
                         System.out.println("Reservation inserted successfully.");
                     } else {
                         System.out.println("Film not found.");
                     }
-
-                    connection.close();
-                    statement.close();
-                    statement1.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
         }
     }
-
 
     @FXML
     void closeWindow(ActionEvent event) {
@@ -529,6 +534,7 @@ public class AdminOptionsController implements Initializable {
                 statement.executeUpdate();
                 System.out.println("Film inserted successfully.");
                 statement.close();
+                connection.close();
 
             } catch (SQLException e) {
                 e.printStackTrace();
