@@ -70,28 +70,30 @@ public class AdminLoginController implements Initializable {
     public void validateLogin() throws IOException {
         DatabaseConnection connection=new DatabaseConnection();
         Connection connectiondb=connection.geConnection();
-        String verify = "select count(1) from AdminInfo where adminName ='"+username.getText()+"' and password='"+password.getText()+"'";
+        if(username!=null &&password!=null) {
+            String verify = "select count(1) from AdminInfo where adminName ='" + username.getText() + "' and password='" + password.getText() + "'";
 
-        try{
-            Statement statement=connectiondb.createStatement();
-            ResultSet resultSet=statement.executeQuery(verify);
+            try {
+                Statement statement = connectiondb.createStatement();
+                ResultSet resultSet = statement.executeQuery(verify);
 
-            while (resultSet.next()){
-                if(resultSet.getInt(1)==1){
-                    invalidLoginText.setVisible(false);
-                    FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("adminOptions.fxml"));
-                    Scene scene = new Scene(fxmlLoader.load());
-                    AdminOptionsController controller=fxmlLoader.getController();
-                    scene.setFill(Color.TRANSPARENT);
-                    stage.setScene(scene);
-                    controller.setStage(stage);
-                    stage.show();
-                }else {
-                    invalidLoginText.setVisible(true);
+                while (resultSet.next()) {
+                    if (resultSet.getInt(1) == 1) {
+                        invalidLoginText.setVisible(false);
+                        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("adminOptions.fxml"));
+                        Scene scene = new Scene(fxmlLoader.load());
+                        AdminOptionsController controller = fxmlLoader.getController();
+                        scene.setFill(Color.TRANSPARENT);
+                        stage.setScene(scene);
+                        controller.setStage(stage);
+                        stage.show();
+                    } else {
+                        invalidLoginText.setVisible(true);
+                    }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }catch (Exception e){
-            e.printStackTrace();
         }
 
 
