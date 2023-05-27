@@ -129,7 +129,7 @@ public class AdminOptionsController implements Initializable {
     @FXML
     JFXButton applyAddR;
 
-    private boolean checkCollision(String room, DatePicker dp, int start, int stop, String name) {
+    boolean checkCollision(String room, DatePicker dp, int start, int stop, String name) {
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
              PreparedStatement statement1 = connection.prepareStatement("SELECT length FROM Film WHERE name = ?")) {
 
@@ -512,12 +512,12 @@ public class AdminOptionsController implements Initializable {
     JFXButton insertButton=new JFXButton();
 
     @FXML
-    private Text collisionDetected;
+    private Text collisionDetected=new Text();
 
     @FXML
-    private Text pickAnotherHour1;
+    private Text pickAnotherHour1=new Text();
     @FXML
-    private Text pickAnotherHour2;
+    private Text pickAnotherHour2=new Text();
     @FXML
     private Text pickAnotherRoom;
 
@@ -586,5 +586,9 @@ public class AdminOptionsController implements Initializable {
         collisionDetected.setVisible(false);
         pickAnotherHour1.setVisible(false);
         pickAnotherHour2.setVisible(false);
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }

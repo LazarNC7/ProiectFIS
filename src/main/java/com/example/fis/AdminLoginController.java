@@ -89,9 +89,12 @@ public class AdminLoginController implements Initializable {
                         Scene scene = new Scene(fxmlLoader.load());
                         AdminOptionsController controller = fxmlLoader.getController();
                         scene.setFill(Color.TRANSPARENT);
-                        stage.setScene(scene);
-                        controller.setStage(stage);
-                        stage.show();
+                        if(stage!=null) {
+                            stage.setScene(scene);
+                            controller.setStage(stage);
+                            stage.show();
+                        }
+
                     } else {
                         invalidLoginText.setVisible(true);
                     }
@@ -128,4 +131,15 @@ public class AdminLoginController implements Initializable {
         });
     }
 
+    public void setUsername(TextField usernameField) {
+        username=usernameField;
+    }
+
+    public void setPassword(TextField passwordField) {
+        password=passwordField;
+    }
+
+    public void setInvalidLoginText(Text invalidLoginText) {
+        this.invalidLoginText=invalidLoginText;
+    }
 }
