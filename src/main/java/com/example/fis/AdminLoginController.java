@@ -64,6 +64,8 @@ public class AdminLoginController implements Initializable {
             }
 
 
+        }else{
+            invalidLoginText.setVisible(true);
         }
     }
 
@@ -101,7 +103,8 @@ public class AdminLoginController implements Initializable {
 
     @FXML
     void closeWindow(MouseEvent event) {
-        stage.close();
+        if(stage!=null)
+         stage.close();
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {

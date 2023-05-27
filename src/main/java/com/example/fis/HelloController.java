@@ -149,6 +149,13 @@ public class HelloController implements Initializable {
         }
     }
 
+    TextField getUsername(){
+        return username;
+    }
+
+    TextField getPassword(){
+        return password;
+    }
     public void signupForm(){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("signup.fxml"));
