@@ -79,7 +79,13 @@ public class AdminLoginController implements Initializable {
             while (resultSet.next()){
                 if(resultSet.getInt(1)==1){
                     invalidLoginText.setVisible(false);
-
+                    FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("adminOptions.fxml"));
+                    Scene scene = new Scene(fxmlLoader.load());
+                    AdminOptionsController controller=fxmlLoader.getController();
+                    scene.setFill(Color.TRANSPARENT);
+                    stage.setScene(scene);
+                    controller.setStage(stage);
+                    stage.show();
                 }else {
                     invalidLoginText.setVisible(true);
                 }
@@ -88,13 +94,7 @@ public class AdminLoginController implements Initializable {
             e.printStackTrace();
         }
 
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("adminOptions.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        AdminOptionsController controller=fxmlLoader.getController();
-        scene.setFill(Color.TRANSPARENT);
-        stage.setScene(scene);
-        controller.setStage(stage);
-        stage.show();
+
     }
 
     @FXML

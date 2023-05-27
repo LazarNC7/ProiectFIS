@@ -38,7 +38,7 @@
                <children>
                   <AnchorPane layoutX="16.0" layoutY="14.0" prefHeight="662.0" prefWidth="813.0">
                      <children>
-                        <TableView fx:id="tabel" layoutX="21.0" layoutY="25.0" prefHeight="611.0" prefWidth="775.0">
+                        <TableView fx:id="tabel" layoutX="21.0" layoutY="20.0" prefHeight="611.0" prefWidth="775.0">
                            <columns>
                               <TableColumn fx:id="title" prefWidth="220.80001068115234" text="Movie Title" />
                               <TableColumn fx:id="dateT" prefWidth="115.20001220703125" text="Date" />
@@ -50,19 +50,19 @@
                         <AnchorPane fx:id="anchorVisible1" prefHeight="662.0" prefWidth="818.0" style="-fx-background-color: black;" visible="false">
                            <children>
                               <TableView fx:id="tableUserInfo" layoutX="28.0" layoutY="22.0" prefHeight="67.0" prefWidth="766.0">
-                                <columns>
-                                  <TableColumn fx:id="fName" prefWidth="93.60002899169922" text="First Name" />
-                                  <TableColumn fx:id="lName" prefWidth="95.19998168945312" text="Last Name" />
+                                 <columns>
+                                    <TableColumn fx:id="fName" prefWidth="93.60002899169922" text="First Name" />
+                                    <TableColumn fx:id="lName" prefWidth="95.19998168945312" text="Last Name" />
                                     <TableColumn fx:id="email" prefWidth="125.60003662109375" text="E-mail" />
                                     <TableColumn fx:id="username" prefWidth="90.4000244140625" text="Username" />
                                     <TableColumn fx:id="cardNumber" prefWidth="191.19998168945312" text="Card Number" />
                                     <TableColumn fx:id="phoneNumber" prefWidth="170.39996337890625" text="Phone Number" />
-                                </columns>
+                                 </columns>
                               </TableView>
                               <TableView fx:id="tableMovies" layoutX="28.0" layoutY="132.0" prefHeight="474.0" prefWidth="766.0">
-                                <columns>
-                                  <TableColumn fx:id="name" prefWidth="765.6000045776367" text="Name" />
-                                </columns>
+                                 <columns>
+                                    <TableColumn fx:id="name" prefWidth="765.6000045776367" text="Name" />
+                                 </columns>
                               </TableView>
                            </children>
                         </AnchorPane>
