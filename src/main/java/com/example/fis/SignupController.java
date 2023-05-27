@@ -119,7 +119,8 @@ public class SignupController implements Initializable {
                     Stage stageLogin=new Stage();
                     HelloApplication hp=new HelloApplication();
                     hp.start(stageLogin);
-                    stage.close();
+                    if(stage!=null)
+                        stage.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

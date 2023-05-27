@@ -52,13 +52,12 @@ public class HelloControllerLoginClientTest extends ApplicationTest {
         TextField passwordTextField = lookup("#password").query();
 
         // Act
-        clickOn(usernameTextField).eraseText(5);
-        clickOn(passwordTextField).eraseText(8);
+        clickOn(usernameTextField).eraseText(10);
+        clickOn(passwordTextField).eraseText(10);
         controller.validateLogin();
 
         // Assert
-        verifyThat("#invalidLoginText", NodeMatchers.isInvisible());
-        // Add additional assertions as needed
+        verifyThat("#invalidLoginText", NodeMatchers.isVisible());
     }
 
     @Test
