@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
@@ -274,6 +276,13 @@ public class ClientController implements Initializable {
         borderPane.setVisible(false);
         seatPane.setVisible(true);
         pane.setBackground(Background.EMPTY);
+
+        // Retrieve the selected movie's id_reservation
+        DataClass selectedFilm = tabel.getSelectionModel().getSelectedItem();
+        int selectedReservationId = selectedFilm.getId_reservation();
+
+        // Disable occupied seats
+        disableOccupiedSeats(selectedReservationId);
     }
 
     @FXML
@@ -309,18 +318,18 @@ public class ClientController implements Initializable {
         tabel.setVisible(true);
         anchorVisible1.setVisible(false);
 
-//        buttons.add(b1);
-//        buttons.add(b2);
-//        buttons.add(b3);
-//        buttons.add(b4);
-//        buttons.add(b5);
-//        buttons.add(b6);
-//        buttons.add(b7);
-//        buttons.add(b8);
-//        buttons.add(b9);
-//        buttons.add(b10);
-//        buttons.add(b11);
-//        buttons.add(b12);
+        buttons.add(b1);
+        buttons.add(b2);
+        buttons.add(b3);
+        buttons.add(b4);
+        buttons.add(b5);
+        buttons.add(b6);
+        buttons.add(b7);
+        buttons.add(b8);
+        buttons.add(b9);
+        buttons.add(b10);
+        buttons.add(b11);
+        buttons.add(b12);
 
         pane.setOnMousePressed(mouseEvent -> {
             x = mouseEvent.getSceneX();
@@ -335,7 +344,7 @@ public class ClientController implements Initializable {
         showProfileInit();
         showMoviesInit();
 
-}
+    }
 
     public void showProfile(ActionEvent event) {
         tabel.setVisible(false);
@@ -345,10 +354,43 @@ public class ClientController implements Initializable {
     public void showMovies(ActionEvent event) {
         tabel.setVisible(true);
         anchorVisible1.setVisible(false);
+
+
+    }
+
+    private void disableOccupiedSeats(int reservationId) {
+        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
+             PreparedStatement statement = connection.prepareStatement("SELECT seat FROM ReservationsUser WHERE id_reservation = ?")) {
+            statement.setInt(1, reservationId);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Get the list of occupied seat numbers
+            List<Integer> occupiedSeats = new ArrayList<>();
+            while (resultSet.next()) {
+                occupiedSeats.add(resultSet.getInt("seat"));
+            }
+
+            // Disable buttons (seats) that are occupied
+            for (JFXButton button : buttons) {
+
+                JFXButton seatButton = button;
+                String seatNumber = seatButton.getText();
+                int seat = Integer.parseInt(seatNumber);
+
+                if (occupiedSeats.contains(seat)) {
+
+                    seatButton.setDisable(true);
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void handleSeatButtonClick(ActionEvent event) {
         JFXButton clickedButton = (JFXButton) event.getSource();
+        clickedButton.setDisable(true);
         String seatNumber = clickedButton.getText();
         System.out.println(clickedButton.getText());
         // Add the seatNumber to the SQLite table
