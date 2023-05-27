@@ -25,7 +25,7 @@ public class AdminLoginControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("adminlogin.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("adminLogin.fxml"));
         Parent root = loader.load();
         controller = loader.getController();
         Scene scene = new Scene(root);

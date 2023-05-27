@@ -512,12 +512,12 @@ public class AdminOptionsController implements Initializable {
     JFXButton insertButton=new JFXButton();
 
     @FXML
-    private Text collisionDetected=new Text();
+    Text collisionDetected=new Text();
 
     @FXML
-    private Text pickAnotherHour1=new Text();
+    Text pickAnotherHour1=new Text();
     @FXML
-    private Text pickAnotherHour2=new Text();
+    Text pickAnotherHour2=new Text();
     @FXML
     private Text pickAnotherRoom;
 
