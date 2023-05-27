@@ -1,21 +1,18 @@
 package com.example.fis;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class ClientOptionsController extends SelectMovieController{
+public class ClientOptionsController implements Initializable {
 
     @FXML
     private AnchorPane pane;
@@ -64,7 +61,10 @@ public class ClientOptionsController extends SelectMovieController{
         }
 
         saliChoice.getItems().addAll("2D", "3D", "IMAX", "4D");
+
     }
+
+
 
 
     public void setStage(Stage stage) {
@@ -72,18 +72,4 @@ public class ClientOptionsController extends SelectMovieController{
     }
 
 
-    public void goToShowMovies(){
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("showMovie.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            ShowMovieController controller = fxmlLoader.getController();
-
-
-            stage.setScene(scene);
-            controller.setStage(stage);
-            stage.show();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 }
