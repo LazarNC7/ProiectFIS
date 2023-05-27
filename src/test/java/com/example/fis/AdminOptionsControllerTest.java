@@ -23,10 +23,6 @@ import java.sql.*;
 
 public class AdminOptionsControllerTest extends ApplicationTest {
 
-    private TextField nameAdd;
-    private TextField genreAdd;
-    private TextField lengthAdd;
-    private String imagePath;
 
     private AdminOptionsController controller;
 
@@ -43,31 +39,6 @@ public class AdminOptionsControllerTest extends ApplicationTest {
     }
 
 
-
-//    @Test
-//    public void testAddMovies() {
-//        // Simulate an action event
-//        ActionEvent event = new ActionEvent();
-//
-//        // Execute the addMovies method
-//        Platform.runLater(() -> {
-//            new AdminOptionsController().addMovies(event); // Replace with your controller class and method name
-//        });
-//
-//        // Wait for the addMovies method to finish
-//        WaitForAsyncUtils.waitForFxEvents();
-//
-//        // Assert that the movie was inserted successfully
-//        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
-//             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM Film WHERE name = ?")) {
-//            statement.setString(1, "Movie Name");
-//            ResultSet resultSet = statement.executeQuery();
-//            int count = resultSet.getInt(1);
-//            Assertions.assertEquals(1, count, "Movie should be inserted into the database.");
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     @Test
     public void testAddMoviesWithoutImageView() {
