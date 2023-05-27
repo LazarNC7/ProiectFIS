@@ -168,7 +168,7 @@ public class AdminOptionsController implements Initializable {
         return true;
     }
 
-    private Integer getId(String name) {
+    Integer getId(String name) {
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
              PreparedStatement statement = connection.prepareStatement("SELECT id_film FROM Film WHERE name = ?")) {
 
