@@ -18,6 +18,7 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ResourceBundle;
@@ -70,15 +71,17 @@ public class AdminLoginController implements Initializable {
     }
 
     public void validateLogin() throws IOException {
-        DatabaseConnection connection=new DatabaseConnection();
-        Connection connectiondb=connection.geConnection();
-        if(username!=null &&password!=null) {
-            String verify = "select count(1) from AdminInfo where adminName ='" + username.getText() + "' and password='" + password.getText() + "'";
+        DatabaseConnection connection = new DatabaseConnection();
+        Connection connectiondb = connection.geConnection();
+        if (username != null && password != null) {
+            String verify = "SELECT COUNT(1) FROM AdminInfo WHERE adminName = ? AND password = ?";
 
-            try {
-                Statement statement = connectiondb.createStatement();
-                ResultSet resultSet = statement.executeQuery(verify);
+            try (PreparedStatement statement = connectiondb.prepareStatement(verify)) {
+                // Set the parameter values
+                statement.setString(1, username.getText());
+                statement.setString(2, password.getText());
 
+                ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     if (resultSet.getInt(1) == 1) {
                         invalidLoginText.setVisible(false);
@@ -97,8 +100,6 @@ public class AdminLoginController implements Initializable {
                 e.printStackTrace();
             }
         }
-
-
     }
 
     @FXML

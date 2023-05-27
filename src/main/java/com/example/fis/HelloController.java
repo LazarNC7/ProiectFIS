@@ -20,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ResourceBundle;
@@ -104,43 +105,50 @@ public class HelloController implements Initializable {
                 .replace("\"", ""); //to be able to save in JSON format
     }
 
-    public void validateLogin(){
-        DatabaseConnection connection=new DatabaseConnection();
-        Connection connectiondb=connection.geConnection();
-        String verify = "select count(1) from UserInfo where username ='"+username.getText()+"' and password='"+encodePassword(username.getText(),password.getText())+"'";
+    public void validateLogin() {
+        if (username != null && password != null) {
+            String verify = "SELECT COUNT(1) FROM UserInfo WHERE username = ? AND password = ?";
+            DatabaseConnection connection = new DatabaseConnection();
+            try (Connection connectiondb = connection.geConnection();
+                 PreparedStatement statement = connectiondb.prepareStatement(verify)) {
 
-        try{
-            Statement statement=connectiondb.createStatement();
-            ResultSet resultSet=statement.executeQuery(verify);
+                // Set the parameter values
+                statement.setString(1, username.getText());
+                statement.setString(2, encodePassword(username.getText(), password.getText()));
 
-            while (resultSet.next()){
-                if(resultSet.getInt(1)==1){
-                    invalidLoginText.setVisible(false);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet != null) {
+                    while (resultSet.next()) {
+                        if (resultSet.getInt(1) == 1) {
+                            invalidLoginText.setVisible(false);
 
-                    try{
-                        User.setPassword(password.getText());
-                        User.setUsername(username.getText());
-                        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("client.fxml"));
-                        Scene scene = new Scene(fxmlLoader.load());
-                        Stage stageSign=new Stage();
-                        ClientController controller=fxmlLoader.getController();
-                        scene.setFill(Color.TRANSPARENT);
-                        stageSign.initStyle(StageStyle.TRANSPARENT);
-                        stageSign.setScene(scene);
-                        controller.setStage(stageSign);
-                        stageSign.show();
-                        stage.close();
-                    }catch (Exception e){
-                        e.printStackTrace();
+                            try {
+                                User.setPassword(password.getText());
+                                User.setUsername(username.getText());
+                                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("client.fxml"));
+                                Scene scene = new Scene(fxmlLoader.load());
+                                Stage stageSign = new Stage();
+                                ClientController controller = fxmlLoader.getController();
+                                scene.setFill(Color.TRANSPARENT);
+                                stageSign.initStyle(StageStyle.TRANSPARENT);
+                                stageSign.setScene(scene);
+                                controller.setStage(stageSign);
+                                stageSign.show();
+                                stage.close();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            invalidLoginText.setVisible(true);
+                        }
                     }
-                }else {
-                    invalidLoginText.setVisible(true);
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }catch (Exception e){
-            e.printStackTrace();
         }
     }
+
 
     public void checkEmpty(ActionEvent event){
         if(username.getText().isBlank()==false && password.getText().isBlank()==false){
