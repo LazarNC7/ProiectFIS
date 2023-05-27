@@ -1,9 +1,11 @@
 package com.example.fis;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobot;
@@ -27,6 +29,7 @@ class HelloControllerTest extends ApplicationTest {
 
     private HelloController controller;
     private Stage stage;
+    private Stage stageSignUp;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -62,5 +65,8 @@ class HelloControllerTest extends ApplicationTest {
         String encodedPassword = HelloController.encodePassword(salt, password);
         Assertions.assertEquals(expectedHashedPassword, encodedPassword);
     }
+
+
+
 
 }
