@@ -397,7 +397,7 @@ public class ClientController implements Initializable {
         addSeatToTable(seatNumber);
     }
 
-    private void addSeatToTable(String seatNumber) {
+    void addSeatToTable(String seatNumber) {
         DataClass selectedFilm = tabel.getSelectionModel().getSelectedItem();
         if (selectedFilm != null) {
             try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");

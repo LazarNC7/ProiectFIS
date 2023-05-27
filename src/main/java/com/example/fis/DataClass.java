@@ -51,4 +51,32 @@ public class DataClass {
     public int getId_reservation() {
         return id_reservation;
     }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setStartT(Integer startT) {
+        this.startT = startT;
+    }
+
+    public void setFinish(Integer finish) {
+        this.finish = finish;
+    }
+
+    public void setDateT(String dateT) {
+        this.dateT = dateT;
+    }
+
+    public void setRoomT(String roomT) {
+        this.roomT = roomT;
+    }
+
+    public void setId_reservation(int id_reservation) {
+        this.id_reservation = id_reservation;
+    }
+
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
+    }
 }
