@@ -29,8 +29,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.sql.*;
@@ -524,7 +526,7 @@ public class AdminOptionsController implements Initializable {
     private String imagePath;
     public void addMovies(ActionEvent event) {
 
-        if (nameAdd.getText() != null && genreAdd.getText() != null && lengthAdd.getText() != null && imageViewAdd.getImage() != null)
+        if (nameAdd != null && genreAdd != null && lengthAdd != null && imageViewAdd != null)
             try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
                  PreparedStatement statement = connection.prepareStatement("INSERT INTO Film (name, genre, length, image) VALUES (?, ?, ?,?)")) {
                 statement.setString(1, nameAdd.getText());
@@ -541,6 +543,21 @@ public class AdminOptionsController implements Initializable {
             }
     }
 
+
+    private final PrintStream originalOut = System.out;
+    private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+    public String getConsoleOutput() {
+        PrintStream originalOut = System.out;
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        try {
+            System.setOut(new PrintStream(outputStream));
+       } finally {
+            System.setOut(originalOut);
+        }
+        return outputStream.toString();
+    }
 
 
     private void insertPhoto() {
