@@ -75,18 +75,4 @@ public class ClientOptionsController extends SelectMovieController{
     }
 
 
-    public void goToShowMovies(){
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("showMovie.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            ShowMovieController controller = fxmlLoader.getController();
-
-
-            stage.setScene(scene);
-            controller.setStage(stage);
-            stage.show();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 }
